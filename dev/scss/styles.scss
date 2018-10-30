@@ -1,0 +1,331 @@
+@import "partials/reset";
+@function strip-unit($value) {
+  @return $value / ($value * 0 + 1);
+}
+
+@mixin fluid-type($min-vw, $max-vw, $min-font-size, $max-font-size) {
+  $u1: unit($min-vw);
+  $u2: unit($max-vw);
+  $u3: unit($min-font-size);
+  $u4: unit($max-font-size);
+
+  @if $u1 == $u2 and $u1 == $u3 and $u1 == $u4 {
+    & {
+      font-size: $min-font-size;
+      @media screen and (min-width: $min-vw) {
+        font-size: calc(#{$min-font-size} + #{strip-unit($max-font-size - $min-font-size)} * ((100vw - #{$min-vw}) / #{strip-unit($max-vw - $min-vw)}));
+      }
+      @media screen and (min-width: $max-vw) {
+        font-size: $max-font-size;
+      }
+    }
+  }
+}
+@mixin respond-at($media) {
+  @media only screen and (min-width: $media) {
+    @content;
+  }
+}
+$bp-xsmall: 600px;
+$bp-small: 780px;
+$bp-med: 1060px;
+$bp-large: 1400px;
+// colors
+$mainText: gold;
+
+// Typography
+body {
+  font-family: 'Press Start 2P', cursive;
+}
+
+$min_width: 600px;
+$max_width: 1200px;
+$h1_min_font: 20px;
+$h1_max_font: 26px;
+$h2_min_font: 15px;
+$h2_max_font: 20px;
+$h3_min_font: 15px;
+$h3_max_font: 20px;
+$msg_min_font: 60px;
+$msg_max_font: 90px;
+$name_min_font: 20px;
+$name_max_font: 40px;
+
+h1 {
+  @include fluid-type($min_width, $max_width, $h1_min_font, $h1_max_font);
+}
+h2 {
+  @include fluid-type($min_width, $max_width, $h1_min_font, $h1_max_font);
+}
+
+.roundMessage {
+    // box-shadow: 1px 1px 0 red;
+}
+.roundNumber {
+
+}
+
+a {
+  text-decoration: none;
+}
+.messageText {
+    @include fluid-type($min_width, $max_width, $msg_min_font, $msg_max_font);
+    // box-shadow: 1px 1px 0 red;
+}
+// Appearance
+.woodBackground {
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  color: $mainText;
+  border: ridge 4px orange;
+  box-shadow: 3px 3px 0 brown;
+}
+
+.enterNameField {
+  color: $mainText;
+  border: ridge 4px orange;
+  box-shadow: 3px 3px 0 brown;
+  @include fluid-type($min_width, $max_width, $name_min_font, $name_max_font);
+  background-image: url("/assets/roundTrackerBG.jpg");
+  font-family: inherit;
+  width: 50vw;
+}
+
+.enterNameButton {
+  color: $mainText;
+  border: ridge 4px orange;
+  box-shadow: 3px 3px 0 brown;
+  @include fluid-type($min_width, $max_width, $name_min_font, $name_max_font);
+  background-image: url("/assets/roundTrackerBG.jpg");
+  font-family: inherit;
+  &:hover {
+    box-shadow: 3px 3px 0 red;
+    color: white;
+  }
+  &:active {
+    box-shadow: 3px 3px 0 red;
+    color: white;
+    background-color: brown;
+  }
+}
+
+.medLabel {
+  color: $mainText;
+  @include fluid-type($min_width, $max_width, $h1_min_font, $h1_max_font);
+}
+
+.lgLabel {
+  color: $mainText;
+  @include fluid-type($min_width, $max_width, $name_min_font, $name_max_font);
+}
+
+.enterRoundsField {
+  color: $mainText;
+  border: ridge 4px orange;
+  box-shadow: 3px 3px 0 brown;
+  @include fluid-type($min_width, $max_width, $name_min_font, $name_max_font);
+  background-image: url("/assets/roundTrackerBG.jpg");
+  font-family: inherit;
+  width: 10vw;
+}
+
+
+// Layout
+.container {
+  width: 100%;
+  height: 100vh;
+  background-image: url("/assets/mainBG.jpg");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+.roundTracker{
+  position: fixed;
+  float: left;
+  left: 50%;
+  top: 5px;
+  padding: 20px 50px;
+  transform: translate(-50%,0);
+  background-image: url("/assets/roundTrackerBG.jpg");
+}
+
+
+.scoreboard {
+  min-width: 200px;
+  height: 300px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-around;
+  position: relative;
+  top: 25%;
+  background-image: url("/assets/scoreBG.jpg");
+}
+.player1 {
+  float: left;
+  left: 5px;
+}
+.player2 {
+  float: right;
+  right: 5px;
+}
+
+.hand {
+  // background-color: blue;
+  width: 300px;
+  height: 300px;
+  position: absolute;
+  top: 25%;
+
+}
+
+.leftHand {
+  left: 27%;
+  float: left;
+  transform: scaleX(-1);
+}
+
+.rightHand {
+  right: 27%;
+  float: right;
+}
+
+.hand svg {
+  width: 300px;
+  height: 300px;
+
+}
+
+.selector {
+  position: fixed;
+  float: left;
+  left: 50%;
+  bottom: 10px;
+  padding: 20px 50px;
+  transform: translate(-50%,0);
+  background-image: url("/assets/roundTrackerBG.jpg");
+
+  display: flex;
+  flex-direction: column;
+}
+
+.selectorContainer {
+  display: flex;
+  justify-content: space-around;
+}
+
+.selectorOption {
+  // width: 25px;
+  // height: 45px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 10px;
+  font-size: 100px;
+}
+
+.messageBox {
+  position: fixed;
+  top: 40%;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  text-align: center;
+  // left: 50%;
+  // transform: translate(-50%,-50%);
+  z-index: 1000;
+  // background-image: url('/assets/starburst.svg');
+  // background-position: center;
+  // background-repeat: no-repeat;
+  // background-size: cover;
+}
+
+.enterRounds {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+}
+.enterRoundsForm {
+  width: 100%;
+}
+
+// Animation
+
+// @keyframes leftHandRock {
+//   0%, 100% {transform: rotate(0deg);}
+//   50% {transform: rotate(45deg);}
+// }
+//
+// @keyframes leftHandShoot {
+//   0% {transform: rotate(0deg);}
+//   100% {transform: rotate(45deg);}
+// }
+//
+// .leftHandRock {
+//   animation-name: leftHandRock;
+//    animation-duration: 1s;
+//    animation-iteration-count: 1;
+//    animation-timing-function: ease; /* or: ease, ease-in, ease-in-out, linear, cubic-bezier(x1, y1, x2, y2) */
+// }
+//
+// .leftHandShoot {
+//   animation-name: leftHandShoot;
+//    animation-duration: 1s;
+//    animation-iteration-count: 1;
+//    animation-timing-function: ease;
+// }
+//
+// @keyframes rightHandRock {
+//   0%, 100% {transform: rotate(0deg);}
+//   50% {transform: rotate(-45deg);}
+// }
+//
+// @keyframes rightHandShoot {
+//   0% {transform: rotate(0deg);}
+//   100% {transform: rotate(-45deg);}
+// }
+//
+// .rightHandRock {
+//   animation-name: rightHandRock;
+//    animation-duration: 1s;
+//    animation-iteration-count: 1;
+//    animation-timing-function: ease; /* or: ease, ease-in, ease-in-out, linear, cubic-bezier(x1, y1, x2, y2) */
+// }
+//
+// .rightHandShoot {
+//   animation-name: rightHandShoot;
+//    animation-duration: 1s;
+//    animation-iteration-count: 1;
+//    animation-timing-function: ease;
+// }
+//
+// @keyframes zoomIn {
+//   0% {font-size: 40px; }
+//   100% {font-size: 80px;}
+// }
+//
+// .zoomIn {
+//   animation-name: zoomIn;
+//    animation-duration: 1s;
+//    animation-iteration-count: 1;
+//    animation-timing-function: ease-out; /* or: ease, ease-in, ease-in-out, linear, cubic-bezier(x1, y1, x2, y2) */
+// }
+
+
+// utility
+.visuallyhidden {
+  border: 0;
+  clip: rect(0 0 0 0);
+  height: 1px;
+  margin: -1px;
+  overflow: hidden;
+  padding: 0;
+  position: absolute;
+  white-space: nowrap;
+  width: 1px;
+}

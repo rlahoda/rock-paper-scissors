@@ -1,0 +1,273 @@
+html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre, a, abbr, acronym, address, big, cite, code, del, dfn, em, img, ins, kbd, q, s, samp, small, strike, strong, sub, sup, tt, var, b, u, i, center, dl, dt, dd, ol, ul, li, fieldset, form, label, legend, table, caption, tbody, tfoot, thead, tr, th, td, article, aside, canvas, details, embed, figure, figcaption, footer, header, hgroup, menu, nav, output, ruby, section, summary, time, mark, audio, video {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  font-size: 100%;
+  font: inherit;
+  vertical-align: baseline; }
+
+article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, section {
+  display: block; }
+
+body {
+  line-height: 1; }
+
+ol, ul {
+  list-style: none; }
+
+blockquote, q {
+  quotes: none; }
+
+blockquote:before, blockquote:after, q:before, q:after {
+  content: '';
+  content: none; }
+
+table {
+  border-collapse: collapse;
+  border-spacing: 0; }
+
+body {
+  font-family: 'Press Start 2P', cursive; }
+
+h1 {
+  font-size: 20px; }
+  @media screen and (min-width: 600px) {
+    h1 {
+      font-size: calc(20px + 6 * ((100vw - 600px) / 600)); } }
+  @media screen and (min-width: 1200px) {
+    h1 {
+      font-size: 26px; } }
+
+h2 {
+  font-size: 20px; }
+  @media screen and (min-width: 600px) {
+    h2 {
+      font-size: calc(20px + 6 * ((100vw - 600px) / 600)); } }
+  @media screen and (min-width: 1200px) {
+    h2 {
+      font-size: 26px; } }
+
+a {
+  text-decoration: none; }
+
+.messageText {
+  font-size: 60px; }
+  @media screen and (min-width: 600px) {
+    .messageText {
+      font-size: calc(60px + 30 * ((100vw - 600px) / 600)); } }
+  @media screen and (min-width: 1200px) {
+    .messageText {
+      font-size: 90px; } }
+
+.woodBackground {
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  color: gold;
+  border: ridge 4px orange;
+  box-shadow: 3px 3px 0 brown; }
+
+.enterNameField {
+  color: gold;
+  border: ridge 4px orange;
+  box-shadow: 3px 3px 0 brown;
+  background-image: url("/assets/roundTrackerBG.jpg");
+  font-family: inherit;
+  width: 50vw; }
+  .enterNameField {
+    font-size: 20px; }
+    @media screen and (min-width: 600px) {
+      .enterNameField {
+        font-size: calc(20px + 20 * ((100vw - 600px) / 600)); } }
+    @media screen and (min-width: 1200px) {
+      .enterNameField {
+        font-size: 40px; } }
+
+.enterNameButton {
+  color: gold;
+  border: ridge 4px orange;
+  box-shadow: 3px 3px 0 brown;
+  background-image: url("/assets/roundTrackerBG.jpg");
+  font-family: inherit; }
+  .enterNameButton {
+    font-size: 20px; }
+    @media screen and (min-width: 600px) {
+      .enterNameButton {
+        font-size: calc(20px + 20 * ((100vw - 600px) / 600)); } }
+    @media screen and (min-width: 1200px) {
+      .enterNameButton {
+        font-size: 40px; } }
+  .enterNameButton:hover {
+    box-shadow: 3px 3px 0 red;
+    color: white; }
+  .enterNameButton:active {
+    box-shadow: 3px 3px 0 red;
+    color: white;
+    background-color: brown; }
+
+.medLabel {
+  color: gold; }
+  .medLabel {
+    font-size: 20px; }
+    @media screen and (min-width: 600px) {
+      .medLabel {
+        font-size: calc(20px + 6 * ((100vw - 600px) / 600)); } }
+    @media screen and (min-width: 1200px) {
+      .medLabel {
+        font-size: 26px; } }
+
+.lgLabel {
+  color: gold; }
+  .lgLabel {
+    font-size: 20px; }
+    @media screen and (min-width: 600px) {
+      .lgLabel {
+        font-size: calc(20px + 20 * ((100vw - 600px) / 600)); } }
+    @media screen and (min-width: 1200px) {
+      .lgLabel {
+        font-size: 40px; } }
+
+.enterRoundsField {
+  color: gold;
+  border: ridge 4px orange;
+  box-shadow: 3px 3px 0 brown;
+  background-image: url("/assets/roundTrackerBG.jpg");
+  font-family: inherit;
+  width: 10vw; }
+  .enterRoundsField {
+    font-size: 20px; }
+    @media screen and (min-width: 600px) {
+      .enterRoundsField {
+        font-size: calc(20px + 20 * ((100vw - 600px) / 600)); } }
+    @media screen and (min-width: 1200px) {
+      .enterRoundsField {
+        font-size: 40px; } }
+
+.container {
+  width: 100%;
+  height: 100vh;
+  background-image: url("/assets/mainBG.jpg");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover; }
+
+.roundTracker {
+  position: fixed;
+  float: left;
+  left: 50%;
+  top: 5px;
+  padding: 20px 50px;
+  transform: translate(-50%, 0);
+  background-image: url("/assets/roundTrackerBG.jpg"); }
+
+.scoreboard {
+  min-width: 200px;
+  height: 300px;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-direction: column;
+      flex-direction: column;
+  -ms-flex-align: center;
+      align-items: center;
+  -ms-flex-pack: distribute;
+      justify-content: space-around;
+  position: relative;
+  top: 25%;
+  background-image: url("/assets/scoreBG.jpg"); }
+
+.player1 {
+  float: left;
+  left: 5px; }
+
+.player2 {
+  float: right;
+  right: 5px; }
+
+.hand {
+  width: 300px;
+  height: 300px;
+  position: absolute;
+  top: 25%; }
+
+.leftHand {
+  left: 27%;
+  float: left;
+  transform: scaleX(-1); }
+
+.rightHand {
+  right: 27%;
+  float: right; }
+
+.hand svg {
+  width: 300px;
+  height: 300px; }
+
+.selector {
+  position: fixed;
+  float: left;
+  left: 50%;
+  bottom: 10px;
+  padding: 20px 50px;
+  transform: translate(-50%, 0);
+  background-image: url("/assets/roundTrackerBG.jpg");
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-direction: column;
+      flex-direction: column; }
+
+.selectorContainer {
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-pack: distribute;
+      justify-content: space-around; }
+
+.selectorOption {
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-pack: center;
+      justify-content: center;
+  -ms-flex-align: center;
+      align-items: center;
+  margin: 10px;
+  font-size: 100px; }
+
+.messageBox {
+  position: fixed;
+  top: 40%;
+  width: 100%;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-pack: center;
+      justify-content: center;
+  -ms-flex-align: center;
+      align-items: center;
+  -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
+  text-align: center;
+  z-index: 1000; }
+
+.enterRounds {
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
+  -ms-flex-pack: center;
+      justify-content: center;
+  -ms-flex-align: center;
+      align-items: center; }
+
+.enterRoundsForm {
+  width: 100%; }
+
+.visuallyhidden {
+  border: 0;
+  clip: rect(0 0 0 0);
+  height: 1px;
+  margin: -1px;
+  overflow: hidden;
+  padding: 0;
+  position: absolute;
+  white-space: nowrap;
+  width: 1px; }
+
+/*# sourceMappingURL=styles.css.map */
