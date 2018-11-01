@@ -127,6 +127,15 @@ a {
       .lgLabel {
         font-size: 40px; } }
 
+.rulesList {
+  font-size: 15px; }
+  @media screen and (min-width: 600px) {
+    .rulesList {
+      font-size: calc(15px + 5 * ((100vw - 600px) / 600)); } }
+  @media screen and (min-width: 1200px) {
+    .rulesList {
+      font-size: 20px; } }
+
 .enterRoundsField {
   color: gold;
   border: ridge 4px orange;
@@ -149,13 +158,14 @@ a {
   background-image: url("/assets/mainBG.jpg");
   background-position: center;
   background-repeat: no-repeat;
-  background-size: cover; }
+  background-size: cover;
+  overflow: hidden; }
 
 .roundTracker {
   position: fixed;
   float: left;
   left: 50%;
-  top: 5px;
+  top: -100px;
   padding: 20px 50px;
   transform: translate(-50%, 0);
   background-image: url("/assets/roundTrackerBG.jpg"); }
@@ -177,17 +187,17 @@ a {
 
 .player1 {
   float: left;
-  left: 5px; }
+  left: -400px; }
 
 .player2 {
   float: right;
-  right: 5px; }
+  right: -400px; }
 
 .hand {
   width: 300px;
   height: 300px;
   position: absolute;
-  top: 25%; }
+  top: 45%; }
 
 .leftHand {
   left: 27%;
@@ -202,11 +212,17 @@ a {
   width: 300px;
   height: 300px; }
 
+.st0 {
+  fill: none;
+  stroke: gold;
+  stroke-width: 4;
+  stroke-miterlimit: 10; }
+
 .selector {
   position: fixed;
   float: left;
   left: 50%;
-  bottom: 10px;
+  bottom: -300px;
   padding: 20px 50px;
   transform: translate(-50%, 0);
   background-image: url("/assets/roundTrackerBG.jpg");
@@ -258,6 +274,28 @@ a {
 
 .enterRoundsForm {
   width: 100%; }
+
+.rulesList {
+  margin-bottom: 10px; }
+  .rulesList > ul {
+    margin-left: 15px; }
+
+.introBox {
+  margin-top: 50px;
+  width: 50%;
+  margin-left: auto;
+  margin-right: auto;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-pack: center;
+      justify-content: center;
+  -ms-flex-align: center;
+      align-items: center;
+  -ms-flex-direction: column;
+      flex-direction: column;
+  padding: 25px;
+  line-height: 1.5;
+  background-image: url("/assets/scoreBG.jpg"); }
 
 .visuallyhidden {
   border: 0;

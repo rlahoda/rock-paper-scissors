@@ -17,22 +17,41 @@ function getHand() {
 }
 
 function getPlayerName() {
-  console.log('getPlayerName Started');
+  let tl = new TimelineMax();
   const messageBox = document.querySelector('.messageBox');
  messageBox.innerHTML = `
 <div class="enterName">
       <label for="name" class="visuallyhidden">Enter your name</label>
       <input type="text" name="name" id="name" class="enterNameField" placeholder="Enter Your Name" autocomplete="off"/>
-      <button type="submit" class="enterNameButton" onClick="playerSetup()">Submit</button>
+      <button id="enterNameButton" type="submit" class="enterNameButton">Submit</button>
   </div>
   `;
+  const submitButton = document.querySelector('#enterNameButton');
+  tl.from('.enterName', 1, {opacity:0});
+let input = document.querySelector('#name');
+input.focus();
+input.addEventListener("keyup", function(event) {
+  event.preventDefault();
+  if (event.keyCode === 13) {
+    document.querySelector("#enterNameButton").click();
+  }
+});
+tl.addPause(1,function(){
+
+  submitButton.addEventListener('click',function(){
+    tl.play();
+    tl.to('.enterName', 0.5,{ opacity:0}).eventCallback('onComplete', playerSetup);
+  });
+});
 }
 
 function playerSetup() {
+  let tl2 = new TimelineMax();
   let plyr1Name = document.querySelector('#name').value;
   const player1Name = document.querySelector('#player1Name');
   const player2Name = document.querySelector('#player2Name');
   const messageBox = document.querySelector('.messageBox');
+
   player1.name = plyr1Name;
   player1Name.innerHTML = player1.name;
   player2Name.innerHTML = player2.name;
@@ -40,12 +59,35 @@ function playerSetup() {
   <div class="enterRounds">
       <label for="name" class="medLabel">How many rounds do you want to play?</label>
     <span class="enterRoundsForm">  <input type="number" name="rounds" id="rounds" class="enterRoundsField" step="1"/>
-      <button type="submit" class="enterNameButton" onclick="roundsSetup()">Submit</button></span>
+      <button id="enterRoundButton" type="submit" class="enterNameButton" onclick="">Submit</button></span>
   </div>
   `;
+  const submitButton = document.querySelector('#enterRoundButton');
+  let number = document.querySelector('#rounds');
+  number.focus();
+  number.addEventListener("keyup", function(event) {
+    event.preventDefault();
+    if (event.keyCode === 13) {
+      document.querySelector("#enterRoundButton").click();
+    }
+  });
+  tl2.from('.enterRounds', 0.5, {opacity:0});
+  tl2.addPause(1,function(){
+    submitButton.addEventListener('click',function(){
+      tl2.play();
+      tl2.to('.enterRounds', 0.5,{ opacity:0}).eventCallback('onComplete', roundsSetup);
+    });
+
+  });
+
+
 }
 
 function roundsSetup() {
+  let tl = new TimelineMax();
+  tl.to('#roundTracker', 1, {top: 5});
+  tl.to('.player1', 1, {left: 5}, 0.5);
+  tl.to('.player2', 1, {right: 5}, 0.5);
   // get the value from the form field for rounds
   rounds = document.querySelector('#rounds').value;
   const roundsToPlay = document.querySelector('#totalRounds');
@@ -61,6 +103,7 @@ function roundsSetup() {
 // triggered by the user clicking the button in the play area
 function playRound(hand) {
   // hide buttons
+  // TweenLite.to('.selector', 1, {bottom: '-300px'});
   // get p1 hand
   player1.hand = hand;
   // get p2 hand
@@ -115,11 +158,12 @@ function play(p1, p2) {
 
 function gamePlay(p1, p2) {
 const messageBox = document.querySelector('.messageBox');
-console.log(rounds);
+// console.log(rounds);
 const roundsToPlay = document.querySelector('#currentRound');
 roundsToPlay.innerHTML = roundCounter;
   if (roundCounter < rounds) {
     // trigger selector
+    TweenLite.to('.selector', 1, {bottom: '10px'});
 
     roundCounter++;
   } else if (p1.wins === p2.wins) {
@@ -149,9 +193,67 @@ roundsToPlay.innerHTML = roundCounter;
 
 }
 
-getPlayerName();
+function openingScreen() {
+  const messageBox = document.querySelector('.messageBox');
+  let tl = new TimelineMax({repeat:-1});
+  let tlSub1 = new TimelineMax();
+    tlSub1.to('.leftHand', 0.75, {rotation: 170}, 1);
+    tlSub1.to('.leftHand', 0.75, {rotation: 205});
+    tlSub1.to('.leftHand', 0.75, {rotation: 170});
+    tlSub1.to('.leftHand', 0.75, {rotation: 205});
+    tlSub1.to('.leftHand', 0.75, {rotation: 170});
+    tlSub1.to('.leftHand', 0.75, {rotation: 205});
+    tlSub1.to('.leftHand', 0.75, {rotation: 180});
+  let tlSub2 = new TimelineMax();
+    tlSub2.to('.rightHand', 0.75, {rotation: 10}, 1);
+    tlSub2.to('.rightHand', 0.75, {rotation: -25});
+    tlSub2.to('.rightHand', 0.75, {rotation: 10});
+    tlSub2.to('.rightHand', 0.75, {rotation: -25});
+    tlSub2.to('.rightHand', 0.75, {rotation: 10});
+    tlSub2.to('.rightHand', 0.75, {rotation: -25});
+    tlSub2.to('.rightHand', 0.75, {rotation: 0});
+  // let tlSub3 = new TimelineMax();
+  //   tlSub3.eventCallback(function () {
+  //     messageBox.innerHTML = `<h1>Rock!</h1>`
+  //   });
+  //   tlSub3.to('.messageBox',1.5, {scale:2});
+  //   tlSub3.eventCallback('onUpdate', function () {
+  //     messageBox.innerHTML = `<h1>Paper!</h1>`
+  //   });
+  //   tlSub3.to('.messageBox',1.5, {scale:2});
+  //   tlSub3.eventCallback('onUpdate', function () {
+  //     messageBox.innerHTML = `<h1>Scissors!</h1>`
+  //   });
+  //   tlSub3.to('.messageBox',1.5, {scale:2});
+  //   tlSub3.eventCallback('onUpdate', function () {
+  //     messageBox.innerHTML = `<h1>Shoot!</h1>`
+  //   });
+
+
+  tl.add(tlSub1, 0);
+  tl.add(tlSub2, 0);
+  // tl.staggerTo(['.leftHand','.leftHand','.leftHand'], 0.5, {cycle:{rotation:[-20,20,0]},
+  // tl.staggerTo(['.leftHand', '.leftHand', '.leftHand'], 1, {cycle:{rotation:[-20,20,0]}, ease:Sine.easeInOut}, 1, 2); ease:Sine.easeInOut});
+  const playGameButton = document.querySelector('#playGame');
+  const introBox = document.querySelector('.introBox');
+  playGameButton.addEventListener('click', function(){
+    tl.to('.introBox', 0.5, {opacity:0});
+    tl.eventCallback('onUpdate', function () {
+      tl.kill();
+      // tl({repeat:0});
+      introBox.classList.add('visuallyhidden');
+    });
+
+    getPlayerName();
+  });
+}
+
+openingScreen();
+// getPlayerName();
 // gamePlay(player1, player2);
 
+
+// This function takes the player's hand choice and returns the SVG for the appropriate hand motion to replace the SVG of the fist
 function changeHand(hand, handContainer) {
     switch (hand) {
       case 'paper':

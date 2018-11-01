@@ -120,6 +120,10 @@ a {
   @include fluid-type($min_width, $max_width, $name_min_font, $name_max_font);
 }
 
+.rulesList {
+  @include fluid-type($min_width, $max_width, $h3_min_font, $h3_max_font);
+}
+
 .enterRoundsField {
   color: $mainText;
   border: ridge 4px orange;
@@ -139,13 +143,14 @@ a {
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
+  overflow: hidden;
 }
 
 .roundTracker{
   position: fixed;
   float: left;
   left: 50%;
-  top: 5px;
+  top: -100px;
   padding: 20px 50px;
   transform: translate(-50%,0);
   background-image: url("/assets/roundTrackerBG.jpg");
@@ -165,11 +170,11 @@ a {
 }
 .player1 {
   float: left;
-  left: 5px;
+  left: -400px;
 }
 .player2 {
   float: right;
-  right: 5px;
+  right: -400px;
 }
 
 .hand {
@@ -177,7 +182,7 @@ a {
   width: 300px;
   height: 300px;
   position: absolute;
-  top: 25%;
+  top: 45%;
 
 }
 
@@ -195,14 +200,21 @@ a {
 .hand svg {
   width: 300px;
   height: 300px;
+}
 
+.st0{
+  fill:none;
+  stroke:$mainText;
+  stroke-width:4;
+  stroke-miterlimit:10;
 }
 
 .selector {
   position: fixed;
   float: left;
   left: 50%;
-  bottom: 10px;
+  // bottom: 10px;
+  bottom: -300px;
   padding: 20px 50px;
   transform: translate(-50%,0);
   background-image: url("/assets/roundTrackerBG.jpg");
@@ -252,6 +264,27 @@ a {
 }
 .enterRoundsForm {
   width: 100%;
+}
+
+.rulesList {
+  margin-bottom: 10px;
+  & > ul {
+    margin-left: 15px;
+  }
+}
+
+.introBox {
+  margin-top: 50px;
+  width: 50%;
+  margin-left: auto;
+  margin-right: auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  padding: 25px;
+  line-height: 1.5;
+  background-image: url("/assets/scoreBG.jpg");
 }
 
 // Animation
