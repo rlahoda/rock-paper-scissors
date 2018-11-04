@@ -47,17 +47,56 @@ h2 {
     h2 {
       font-size: 26px; } }
 
+.rpsText {
+  color: gold; }
+  .rpsText {
+    font-size: 60px; }
+    @media screen and (min-width: 600px) {
+      .rpsText {
+        font-size: calc(60px + 30 * ((100vw - 600px) / 600)); } }
+    @media screen and (min-width: 1200px) {
+      .rpsText {
+        font-size: 90px; } }
+
+.regularText {
+  color: gold;
+  padding: 5px; }
+  .regularText {
+    font-size: 20px; }
+    @media screen and (min-width: 600px) {
+      .regularText {
+        font-size: calc(20px + 6 * ((100vw - 600px) / 600)); } }
+    @media screen and (min-width: 1200px) {
+      .regularText {
+        font-size: 26px; } }
+
 a {
-  text-decoration: none; }
+  text-decoration: none;
+  color: inherit; }
+
+.selectorOption {
+  font-family: 'Press Start 2P', cursive;
+  color: gold;
+  padding: 5px; }
+  .selectorOption {
+    font-size: 20px; }
+    @media screen and (min-width: 600px) {
+      .selectorOption {
+        font-size: calc(20px + 6 * ((100vw - 600px) / 600)); } }
+    @media screen and (min-width: 1200px) {
+      .selectorOption {
+        font-size: 26px; } }
 
 .messageText {
-  font-size: 60px; }
-  @media screen and (min-width: 600px) {
-    .messageText {
-      font-size: calc(60px + 30 * ((100vw - 600px) / 600)); } }
-  @media screen and (min-width: 1200px) {
-    .messageText {
-      font-size: 90px; } }
+  filter: drop-shadow(2px 2px 0 brown); }
+  .messageText {
+    font-size: 60px; }
+    @media screen and (min-width: 600px) {
+      .messageText {
+        font-size: calc(60px + 30 * ((100vw - 600px) / 600)); } }
+    @media screen and (min-width: 1200px) {
+      .messageText {
+        font-size: 90px; } }
 
 .woodBackground {
   background-position: center;
@@ -88,7 +127,8 @@ a {
   border: ridge 4px orange;
   box-shadow: 3px 3px 0 brown;
   background-image: url("/assets/roundTrackerBG.jpg");
-  font-family: inherit; }
+  font-family: inherit;
+  padding: 5px; }
   .enterNameButton {
     font-size: 20px; }
     @media screen and (min-width: 600px) {
@@ -106,7 +146,8 @@ a {
     background-color: brown; }
 
 .medLabel {
-  color: gold; }
+  color: gold;
+  filter: drop-shadow(2px 2px 0 brown); }
   .medLabel {
     font-size: 20px; }
     @media screen and (min-width: 600px) {
@@ -117,7 +158,8 @@ a {
         font-size: 26px; } }
 
 .lgLabel {
-  color: gold; }
+  color: gold;
+  filter: drop-shadow(2px 2px 0 brown); }
   .lgLabel {
     font-size: 20px; }
     @media screen and (min-width: 600px) {
@@ -128,13 +170,15 @@ a {
         font-size: 40px; } }
 
 .rulesList {
-  font-size: 15px; }
-  @media screen and (min-width: 600px) {
-    .rulesList {
-      font-size: calc(15px + 5 * ((100vw - 600px) / 600)); } }
-  @media screen and (min-width: 1200px) {
-    .rulesList {
-      font-size: 20px; } }
+  filter: drop-shadow(2px 2px 0 brown); }
+  .rulesList {
+    font-size: 15px; }
+    @media screen and (min-width: 600px) {
+      .rulesList {
+        font-size: calc(15px + 5 * ((100vw - 600px) / 600)); } }
+    @media screen and (min-width: 1200px) {
+      .rulesList {
+        font-size: 20px; } }
 
 .enterRoundsField {
   color: gold;
@@ -152,14 +196,22 @@ a {
       .enterRoundsField {
         font-size: 40px; } }
 
+.playingText {
+  text-align: center;
+  filter: drop-shadow(2px 2px 0 brown); }
+
 .container {
   width: 100%;
-  height: 100vh;
+  min-height: 100vh;
   background-image: url("/assets/mainBG.jpg");
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
-  overflow: hidden; }
+  overflow-x: hidden;
+  background-attachment: fixed; }
+
+li {
+  margin-bottom: 0.5em; }
 
 .roundTracker {
   position: fixed;
@@ -182,7 +234,6 @@ a {
   -ms-flex-pack: distribute;
       justify-content: space-around;
   position: relative;
-  top: 25%;
   background-image: url("/assets/scoreBG.jpg"); }
 
 .player1 {
@@ -193,30 +244,72 @@ a {
   float: right;
   right: -400px; }
 
-.hand {
-  width: 300px;
-  height: 300px;
+.playingContainer {
   position: absolute;
-  top: 45%; }
+  top: 45%;
+  left: 50%;
+  transform: translateX(-50%);
+  -ms-flex-direction: column;
+      flex-direction: column;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-align: center;
+      align-items: center;
+  -ms-flex-pack: center;
+      justify-content: center;
+  width: 100%;
+  z-index: 0; }
+
+.handsContainer {
+  width: 100%;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-pack: center;
+      justify-content: center;
+  -ms-flex-align: center;
+      align-items: center; }
+
+.hand {
+  width: 100px;
+  height: 100px; }
+  @media only screen and (min-width: 780px) {
+    .hand {
+      width: 200px;
+      height: 200px; } }
+  @media only screen and (min-width: 1060px) {
+    .hand {
+      width: 250px;
+      height: 250px; } }
+  @media only screen and (min-width: 1400px) {
+    .hand {
+      width: 300px;
+      height: 300px; } }
 
 .leftHand {
-  left: 27%;
-  float: left;
   transform: scaleX(-1); }
 
-.rightHand {
-  right: 27%;
-  float: right; }
-
 .hand svg {
-  width: 300px;
-  height: 300px; }
+  width: 100px;
+  height: 100px; }
+  @media only screen and (min-width: 780px) {
+    .hand svg {
+      width: 200px;
+      height: 200px; } }
+  @media only screen and (min-width: 1060px) {
+    .hand svg {
+      width: 250px;
+      height: 250px; } }
+  @media only screen and (min-width: 1400px) {
+    .hand svg {
+      width: 300px;
+      height: 300px; } }
 
 .st0 {
   fill: none;
   stroke: gold;
   stroke-width: 4;
-  stroke-miterlimit: 10; }
+  stroke-miterlimit: 10;
+  filter: drop-shadow(2px 2px 0 brown); }
 
 .selector {
   position: fixed;
@@ -225,11 +318,15 @@ a {
   bottom: -300px;
   padding: 20px 50px;
   transform: translate(-50%, 0);
-  background-image: url("/assets/roundTrackerBG.jpg");
+  background-image: url("/assets/selectorBG.jpg");
   display: -ms-flexbox;
   display: flex;
   -ms-flex-direction: column;
-      flex-direction: column; }
+      flex-direction: column;
+  -ms-flex-align: center;
+      align-items: center;
+  -ms-flex-pack: center;
+      justify-content: center; }
 
 .selectorContainer {
   display: -ms-flexbox;
@@ -238,14 +335,27 @@ a {
       justify-content: space-around; }
 
 .selectorOption {
+  background: none;
   display: -ms-flexbox;
   display: flex;
+  -ms-flex-direction: column;
+      flex-direction: column;
   -ms-flex-pack: center;
       justify-content: center;
   -ms-flex-align: center;
       align-items: center;
   margin: 10px;
-  font-size: 100px; }
+  padding: 10px;
+  border: ridge 4px orange;
+  box-shadow: 3px 3px 0 brown; }
+  .selectorOption:hover {
+    color: white;
+    border: ridge 4px brown;
+    box-shadow: 3px 3px 0 orange; }
+  .selectorOption:active {
+    color: white;
+    border: ridge 4px white;
+    box-shadow: 3px 3px 0 red; }
 
 .messageBox {
   position: fixed;
@@ -276,13 +386,17 @@ a {
   width: 100%; }
 
 .rulesList {
-  margin-bottom: 10px; }
+  margin-bottom: 1em; }
   .rulesList > ul {
-    margin-left: 15px; }
+    margin-left: 1em; }
 
 .introBox {
-  margin-top: 50px;
-  width: 50%;
+  position: fixed;
+  top: 15px;
+  left: 50%;
+  transform: translateX(-50%);
+  margin-top: 5px;
+  width: 95%;
   margin-left: auto;
   margin-right: auto;
   display: -ms-flexbox;
@@ -295,7 +409,20 @@ a {
       flex-direction: column;
   padding: 25px;
   line-height: 1.5;
-  background-image: url("/assets/scoreBG.jpg"); }
+  z-index: 50;
+  background-image: url("/assets/introBG.jpg"); }
+  @media only screen and (min-width: 780px) {
+    .introBox {
+      width: 80%;
+      margin-top: 10px; } }
+  @media only screen and (min-width: 1060px) {
+    .introBox {
+      width: 65%;
+      margin-top: 20px; } }
+  @media only screen and (min-width: 1400px) {
+    .introBox {
+      width: 50%;
+      margin-top: 50px; } }
 
 .visuallyhidden {
   border: 0;
@@ -307,5 +434,8 @@ a {
   position: absolute;
   white-space: nowrap;
   width: 1px; }
+
+.fullWidth {
+  width: 100%; }
 
 /*# sourceMappingURL=styles.css.map */

@@ -40,19 +40,33 @@ tl.addPause(1,function(){
 
   submitButton.addEventListener('click',function(){
     tl.play();
-    tl.to('.enterName', 0.5,{ opacity:0}).eventCallback('onComplete', playerSetup);
+    tl.to('.enterName', 0.5,{ opacity:0}).eventCallback('onComplete', playerSetup() );
   });
 });
 }
 
 function playerSetup() {
   let tl2 = new TimelineMax();
-  let plyr1Name = document.querySelector('#name').value;
+  if (player1.name === '') {
+  const plyr1Name = document.querySelector('#name').value;
+    player1.name = plyr1Name;
+
+  }
+  const player1Hand = document.querySelector('.leftHand');
+  const player2Hand = document.querySelector('.rightHand');
+  const player1Score = document.querySelector('#player1Score');
+  const player2Score = document.querySelector('#player2Score');
   const player1Name = document.querySelector('#player1Name');
   const player2Name = document.querySelector('#player2Name');
   const messageBox = document.querySelector('.messageBox');
+  changeHand('rock', player1Hand);
+  changeHand('rock', player2Hand);
+  roundCounter = 0;
+  player1.wins = 0;
+  player2.wins = 0;
+  player1Score.innerHTML = 0;
+  player2Score.innerHTML = 0;
 
-  player1.name = plyr1Name;
   player1Name.innerHTML = player1.name;
   player2Name.innerHTML = player2.name;
   messageBox.innerHTML = `
@@ -84,10 +98,16 @@ function playerSetup() {
 }
 
 function roundsSetup() {
+  const playingContainer = document.querySelector('.playingContainer');
   let tl = new TimelineMax();
+  tl.addCallback(function () {
+  tl.to('.playingContainer', 1, { top: '25%'});
+  playingContainer.classList.remove('visuallyhidden');
+});
   tl.to('#roundTracker', 1, {top: 5});
   tl.to('.player1', 1, {left: 5}, 0.5);
   tl.to('.player2', 1, {right: 5}, 0.5);
+
   // get the value from the form field for rounds
   rounds = document.querySelector('#rounds').value;
   const roundsToPlay = document.querySelector('#totalRounds');
@@ -102,14 +122,60 @@ function roundsSetup() {
 
 // triggered by the user clicking the button in the play area
 function playRound(hand) {
-  // hide buttons
-  // TweenLite.to('.selector', 1, {bottom: '-300px'});
   // get p1 hand
   player1.hand = hand;
   // get p2 hand
   player2.hand = getHand();
+  const messageBox = document.querySelector('.messageBox');
+  const rockText = document.querySelector('.rockText');
+  const paperText = document.querySelector('.paperText');
+  const scissorsText = document.querySelector('.scissorsText');
+  const shootText = document.querySelector('.shootText');
+  const player1Hand = document.querySelector('.leftHand');
+  const player2Hand = document.querySelector('.rightHand');
+  const selectorOptions = document.querySelectorAll('.selectorOptions');
+  for (selector of selectorOptions) {
+    if (selector.disabled = false) {
+      selector.disabled = true;
+    }
+  }
+
+  messageBox.innerHTML = '';
+  changeHand('rock', player1Hand);
+  changeHand('rock', player2Hand);
   // determine winner
-  play(player1, player2);
+  let tl = new TimelineMax();
+    tl.to('.selector', 1, {bottom: '-300px'});
+    tl.to('.hand > svg', 0.75, {rotation: 10});
+    tl.addCallback(function () {
+    rockText.classList.remove('visuallyhidden');
+  });
+    // tl.to('.rockText', 1.25, {scale:2}, 1);
+    tl.to('.hand > svg', 0.75, {rotation: -25});
+    tl.to('.hand > svg', 0.75, {rotation: 10});
+    tl.addCallback(function () {
+      rockText.classList.add('visuallyhidden');
+      paperText.classList.remove('visuallyhidden');
+    });
+    // tl.to('.paperText', 1.25, {opacity:100}, 1);
+    tl.to('.hand > svg', 0.75, {rotation: -25});
+    tl.to('.hand > svg', 0.75, {rotation: 10});
+    tl.addCallback(function () {
+      paperText.classList.add('visuallyhidden');
+      scissorsText.classList.remove('visuallyhidden');
+    });
+    // tl.to('.scissorsText', 1.25, {opacity:100}, 1);
+    tl.to('.hand > svg', 0.75, {rotation: -25});
+    tl.to('.hand > svg', 0.75, {rotation: 0});
+    tl.addCallback(function () {
+      play(player1, player2);
+      scissorsText.classList.add('visuallyhidden');
+      shootText.classList.remove('visuallyhidden');
+    });
+    tl.to('.hand > svg', 1, {}, );
+    tl.addCallback(function () {
+      shootText.classList.add('visuallyhidden');
+    });
 }
 
 
@@ -128,16 +194,15 @@ function play(p1, p2) {
   changeHand(p2.hand, player2Hand);
   let winner = {};
   if (p1.hand === p2.hand) {
-    let result = `👎  It was a tie, nobody wins!`;
+    let result = `<h1>👎  It was a tie, nobody wins!</h1>`;
     messageBox.innerHTML = result;
-    // return null;
   } else if (
     p1.hand === 'rock' && p2.hand === 'scissors' ||
     p1.hand === 'scissors' && p2.hand === 'paper' ||
     p1.hand === 'paper' && p2.hand === 'rock'
   ) {
     let result = `
-      ${p1.name} is the winner!
+      <h1>${p1.name} is the winner!</h1>
       `;
     p1.wins++;
     player1Score.innerHTML = player1.wins;
@@ -145,7 +210,7 @@ function play(p1, p2) {
     winner = p1;
   } else {
     let result = `
-      ${p2.name} is the winner!
+      <h1>${p2.name} is the winner!</h1>
       `;
     p2.wins++;
     player2Score.innerHTML = player2.wins;
@@ -161,87 +226,118 @@ const messageBox = document.querySelector('.messageBox');
 // console.log(rounds);
 const roundsToPlay = document.querySelector('#currentRound');
 roundsToPlay.innerHTML = roundCounter;
+const selectorOptions = document.querySelectorAll('.selectorOption');
   if (roundCounter < rounds) {
     // trigger selector
-    TweenLite.to('.selector', 1, {bottom: '10px'});
+
+    for (selector of selectorOptions) {
+      if (selector.disabled = true) {
+        selector.disabled = false;
+      }
+    }
+    TweenLite.to('.selector', 1, {bottom: '10px', delay: 1});
 
     roundCounter++;
   } else if (p1.wins === p2.wins) {
     //tiebreaker round
+    for (selector of selectorContainer) {
+      if (selector.disabled = true) {
+        selector.disabled = false;
+      }
+    }
     messageBox.innerHTML = `
   <h1 class="lgLabel">It's a tie!<br>
     Prepare for a tiebreaker round!</h1>
     `;
     //trigger selector again
-
+    TweenLite.to('.selector', 1, {bottom: '10px', delay: 1});
   } else {
     if (p1.wins > p2.wins) {
       messageBox.innerHTML = `
-    <h1 class="lgLabel">${p1.name} wins the game!</h1>
+    <span class="fullWidth"><h1 class="lgLabel">${p1.name} wins the game!</h1></span>
+      <a href="#" id="playAgainButton" class="enterNameButton" onClick="playerSetup()">Play Again!</a>
       `;
     } else {
       messageBox.innerHTML = `
-      <h1 class="lgLabel">${p2.name} wins the game!</h1>
+    <span  class="fullWidth"><h1 class="lgLabel">${p2.name} wins the game!</h1></span>
+      <a href="#" id="playAgainButton" class="enterNameButton" onClick="playerSetup()">Play Again!</a>
       `;
     }
+    // give play again button
+
   }
     // declare winner
-    console.log(p1);
-    console.log(p2);
-    console.log(rounds);
+    // console.log(p1);
+    // console.log(p2);
+    // console.log(rounds);
 
 
 }
 
 function openingScreen() {
   const messageBox = document.querySelector('.messageBox');
+  const rockText = document.querySelector('.rockText');
+  const paperText = document.querySelector('.paperText');
+  const scissorsText = document.querySelector('.scissorsText');
+  const shootText = document.querySelector('.shootText');
+  const playingContainer = document.querySelector('.playingContainer');
   let tl = new TimelineMax({repeat:-1});
-  let tlSub1 = new TimelineMax();
-    tlSub1.to('.leftHand', 0.75, {rotation: 170}, 1);
-    tlSub1.to('.leftHand', 0.75, {rotation: 205});
-    tlSub1.to('.leftHand', 0.75, {rotation: 170});
-    tlSub1.to('.leftHand', 0.75, {rotation: 205});
-    tlSub1.to('.leftHand', 0.75, {rotation: 170});
-    tlSub1.to('.leftHand', 0.75, {rotation: 205});
-    tlSub1.to('.leftHand', 0.75, {rotation: 180});
-  let tlSub2 = new TimelineMax();
-    tlSub2.to('.rightHand', 0.75, {rotation: 10}, 1);
-    tlSub2.to('.rightHand', 0.75, {rotation: -25});
-    tlSub2.to('.rightHand', 0.75, {rotation: 10});
-    tlSub2.to('.rightHand', 0.75, {rotation: -25});
-    tlSub2.to('.rightHand', 0.75, {rotation: 10});
-    tlSub2.to('.rightHand', 0.75, {rotation: -25});
-    tlSub2.to('.rightHand', 0.75, {rotation: 0});
-  // let tlSub3 = new TimelineMax();
-  //   tlSub3.eventCallback(function () {
-  //     messageBox.innerHTML = `<h1>Rock!</h1>`
-  //   });
-  //   tlSub3.to('.messageBox',1.5, {scale:2});
-  //   tlSub3.eventCallback('onUpdate', function () {
-  //     messageBox.innerHTML = `<h1>Paper!</h1>`
-  //   });
-  //   tlSub3.to('.messageBox',1.5, {scale:2});
-  //   tlSub3.eventCallback('onUpdate', function () {
-  //     messageBox.innerHTML = `<h1>Scissors!</h1>`
-  //   });
-  //   tlSub3.to('.messageBox',1.5, {scale:2});
-  //   tlSub3.eventCallback('onUpdate', function () {
-  //     messageBox.innerHTML = `<h1>Shoot!</h1>`
-  //   });
+    tl.to('.hand > svg', 0.75, {rotation: 10});
+    tl.addCallback(function () {
+    rockText.classList.remove('visuallyhidden');
+  }, 1);
+    // tl.to('.rockText', 1.25, {scale:2}, 1);
+    tl.to('.hand > svg', 0.75, {rotation: -25});
+    tl.to('.hand > svg', 0.75, {rotation: 10});
+    tl.addCallback(function () {
+      rockText.classList.add('visuallyhidden');
+      paperText.classList.remove('visuallyhidden');
+    });
+    // tl.to('.paperText', 1.25, {opacity:100}, 1);
+    tl.to('.hand > svg', 0.75, {rotation: -25});
+    tl.to('.hand > svg', 0.75, {rotation: 10});
+    tl.addCallback(function () {
+      paperText.classList.add('visuallyhidden');
+      scissorsText.classList.remove('visuallyhidden');
+    });
+    // tl.to('.scissorsText', 1.25, {opacity:100}, 1);
+    tl.to('.hand > svg', 0.75, {rotation: -25});
+    tl.to('.hand > svg', 0.75, {rotation: 0});
+    tl.addCallback(function () {
+      scissorsText.classList.add('visuallyhidden');
+      shootText.classList.remove('visuallyhidden');
+    });
+    tl.to('.hand > svg', 1, {}, );
+    tl.addCallback(function () {
+      shootText.classList.add('visuallyhidden');
+    });
+    // tl.to('.shootText', 1.25, {opacity:100}, 1);
+    tl.addLabel('end');
 
-
-  tl.add(tlSub1, 0);
-  tl.add(tlSub2, 0);
-  // tl.staggerTo(['.leftHand','.leftHand','.leftHand'], 0.5, {cycle:{rotation:[-20,20,0]},
-  // tl.staggerTo(['.leftHand', '.leftHand', '.leftHand'], 1, {cycle:{rotation:[-20,20,0]}, ease:Sine.easeInOut}, 1, 2); ease:Sine.easeInOut});
   const playGameButton = document.querySelector('#playGame');
   const introBox = document.querySelector('.introBox');
   playGameButton.addEventListener('click', function(){
     tl.to('.introBox', 0.5, {opacity:0});
     tl.eventCallback('onUpdate', function () {
-      tl.kill();
+      // tl.kill();
+      // tl.restart();
+      tl.seek(0);
+      tl.pause();
+      if (!rockText.classList.contains('visuallyhidden')) {
+        rockText.classList.add('visuallyhidden');
+      };
+      if (!paperText.classList.contains('visuallyhidden')) {
+        paperText.classList.add('visuallyhidden');
+      };
+      if (!scissorsText.classList.contains('visuallyhidden')) {
+        scissorsText.classList.add('visuallyhidden');
+      };
+      if (!shootText.classList.contains('visuallyhidden')) {
+        shootText.classList.add('visuallyhidden');
+      };
       // tl({repeat:0});
       introBox.classList.add('visuallyhidden');
+      playingContainer.classList.add('visuallyhidden');
     });
 
     getPlayerName();
@@ -261,7 +357,7 @@ function changeHand(hand, handContainer) {
       <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
          viewBox="0 0 128 128" style="enable-background:new 0 0 128 128;" xml:space="preserve">
       <style type="text/css">
-        .st0{fill:none;stroke:#000000;stroke-width:4;stroke-miterlimit:10;}
+        /* .st0{fill:none;stroke:#000000;stroke-width:4;stroke-miterlimit:10;} */
       </style>
       <g>
         <polygon class="st0" points="126,48.4 85.8,48.4 72.6,35.1 51.2,35.1 46.6,39.8 11.6,39.8 8.9,42.4 8.9,52.5 4.3,57.1 4.3,64.1
@@ -280,7 +376,7 @@ function changeHand(hand, handContainer) {
       <svg version="1.1" id="Layer_2" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
          viewBox="0 0 128 128" style="enable-background:new 0 0 128 128;" xml:space="preserve">
       <style type="text/css">
-        .st0{fill:none;stroke:#000000;stroke-width:4;stroke-miterlimit:10;}
+        /* .st0{fill:none;stroke:#000000;stroke-width:4;stroke-miterlimit:10;} */
       </style>
       <g>
         <polygon class="st0" points="126,47.8 86.6,47.8 73.6,34.8 51,34.8 47.1,38.7 12.1,35.3 5.3,35.3 3.1,37.5 3.1,44.6 5.2,46.7
@@ -299,7 +395,7 @@ function changeHand(hand, handContainer) {
       <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
            viewBox="0 0 128 128" style="enable-background:new 0 0 128 128;" xml:space="preserve">
         <style type="text/css">
-          .st0{fill:none;stroke:#000000;stroke-width:4;stroke-miterlimit:10;}
+          /* .st0{fill:none;stroke:#000000;stroke-width:4;stroke-miterlimit:10;} */
         </style>
         <g>
           <polygon class="st0" points="125.4,47.6 85.5,47.6 72.7,34.8 49.9,34.8 47,37.7 28.4,37.7 24.3,41.7 24.3,50.1 27.9,51.9
