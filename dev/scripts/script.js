@@ -2,12 +2,12 @@ const hands = ['rock', 'paper', 'scissors'];
 const player1 = {
   name: '',
   hand: '',
-  wins: 0,
+  wins: 0
 };
 const player2 = {
   name: 'Harriet',
   hand: getHand(),
-  wins: 0,
+  wins: 0
 };
 let rounds = 1;
 let roundCounter = 0;
@@ -16,10 +16,11 @@ function getHand() {
   return hands[parseInt((Math.random() * 10) % 3)];
 }
 
-function getUser2Name() {
+// Uses an AJAX call to get a random name for Player2
+function getPlayer2Name() {
   const url = "https://randomuser.me/api/?inc=name";
   return new Promise(function(resolve, reject) {
-  // the ajax request
+    // the ajax request
     let xhr = new XMLHttpRequest();
     let response;
     let name = '';
@@ -38,14 +39,16 @@ function getUser2Name() {
   })
 }
 
+// Asks the user for their name then moves to the next step
 function getPlayerName() {
-  getUser2Name().then(function(response) {
-    console.log(response);
+  // Call the promise function to query the API for a name for Player 2
+  getPlayer2Name().then(function(response) {
     player2.name = response;
   });
+  // Sets up the animation for fading in and out the form for the user name
   let tl = new TimelineMax();
   const messageBox = document.querySelector('.messageBox');
- messageBox.innerHTML = `
+  messageBox.innerHTML = `
 <div class="enterName">
       <label for="name" class="visuallyhidden">Enter your name</label>
       <input type="text" name="name" id="name" class="enterNameField" placeholder="Enter Your Name" autocomplete="off"/>
@@ -53,28 +56,33 @@ function getPlayerName() {
   </div>
   `;
   const submitButton = document.querySelector('#enterNameButton');
-  tl.from('.enterName', 1, {opacity:0});
-let input = document.querySelector('#name');
-input.focus();
-input.addEventListener("keyup", function(event) {
-  event.preventDefault();
-  if (event.keyCode === 13) {
-    document.querySelector("#enterNameButton").click();
-  }
-});
-tl.addPause(1,function(){
-
-  submitButton.addEventListener('click',function(){
-    tl.play();
-    tl.to('.enterName', 0.5,{ opacity:0}).eventCallback('onComplete', playerSetup() );
+  // Fade in the name form
+  tl.from('.enterName', 1, {opacity: 0});
+  let input = document.querySelector('#name');
+  input.focus();
+  // Allow the user to press the enter key instead of clicking on the button if they want
+  input.addEventListener("keyup", function(event) {
+    event.preventDefault();
+    if (event.keyCode === 13) {
+      document.querySelector("#enterNameButton").click();
+    }
   });
-});
+  // Pause the animation timeline until the user clicks then fade out the form and trigger the next function
+  tl.addPause(1, function() {
+
+    submitButton.addEventListener('click', function() {
+      tl.play();
+      tl.to('.enterName', 0.5, {opacity: 0}).eventCallback('onComplete', getRoundsToPlay());
+    });
+  });
 }
 
-function playerSetup() {
+// Function asks the user for number of rounds to play
+function getRoundsToPlay() {
   let tl2 = new TimelineMax();
+  // When the player is playing for a 2nd time, they already have a name, so if there isn't a name, take the name from the name form in the last step and set it as the player1 name
   if (player1.name === '') {
-  const plyr1Name = document.querySelector('#name').value;
+    const plyr1Name = document.querySelector('#name').value;
     player1.name = plyr1Name;
 
   }
@@ -85,6 +93,7 @@ function playerSetup() {
   const player1Name = document.querySelector('#player1Name');
   const player2Name = document.querySelector('#player2Name');
   const messageBox = document.querySelector('.messageBox');
+  // If the user is playing for a 2nd time, the hands might still be in the settings from the last round, so this resets them both to the fist then resets the number of rounds, player scores, and the scores in the scoreboard back to 0 for the new game
   changeHand('rock', player1Hand);
   changeHand('rock', player2Hand);
   roundCounter = 0;
@@ -92,9 +101,10 @@ function playerSetup() {
   player2.wins = 0;
   player1Score.innerHTML = 0;
   player2Score.innerHTML = 0;
-
+  // Put the 2 player names into the appropriate spots
   player1Name.innerHTML = player1.name;
   player2Name.innerHTML = player2.name;
+  // Ask the user how many rounds they want to play
   messageBox.innerHTML = `
   <div class="enterRounds">
       <label for="name" class="medLabel">How many rounds do you want to play?</label>
@@ -104,32 +114,33 @@ function playerSetup() {
   `;
   const submitButton = document.querySelector('#enterRoundButton');
   let number = document.querySelector('#rounds');
+  // Ensure the cursor focuses to the new form field
   number.focus();
+  // Let the user press enter instead of clicking the submit button if they want
   number.addEventListener("keyup", function(event) {
     event.preventDefault();
     if (event.keyCode === 13) {
       document.querySelector("#enterRoundButton").click();
     }
   });
-  tl2.from('.enterRounds', 0.5, {opacity:0});
-  tl2.addPause(1,function(){
-    submitButton.addEventListener('click',function(){
+  tl2.from('.enterRounds', 0.5, {opacity: 0});
+  tl2.addPause(1, function() {
+    // When the user clicks the submit button, fade out the form and move on to the next function
+    submitButton.addEventListener('click', function() {
       tl2.play();
-      tl2.to('.enterRounds', 0.5,{ opacity:0}).eventCallback('onComplete', roundsSetup);
+      tl2.to('.enterRounds', 0.5, {opacity: 0}).eventCallback('onComplete', roundsSetup);
     });
-
   });
-
-
 }
 
+// Bring in the scoreboard and set up the information on it and clear out any message that might be in the message box
 function roundsSetup() {
   const playingContainer = document.querySelector('.playingContainer');
   let tl = new TimelineMax();
-  tl.addCallback(function () {
-  tl.to('.playingContainer', 1, { top: '25%'});
-  playingContainer.classList.remove('visuallyhidden');
-});
+  tl.addCallback(function() {
+    tl.to('.playingContainer', 1, {top: '25%'});
+    playingContainer.classList.remove('visuallyhidden');
+  });
   tl.to('.scoreBoard', 1, {top: 5});
 
   // get the value from the form field for rounds
@@ -158,73 +169,65 @@ function playRound(hand) {
   const player1Hand = document.querySelector('.leftHand');
   const player2Hand = document.querySelector('.rightHand');
   const selectorOptions = document.querySelectorAll('button.selectorOption');
+  // Disable the buttons so the user can't accidentally trigger them when they're off screen
   for (selector of selectorOptions) {
     if (!selector.hasAttribute('disabled')) {
       selector.setAttribute("disabled", "disabled");
     }
   }
-
+  // Clear the message box and reset the hands to fists
   messageBox.innerHTML = '';
   changeHand('rock', player1Hand);
   changeHand('rock', player2Hand);
-  // determine winner
   let tl = new TimelineMax();
-    tl.to('.selector', 1, {bottom: '-350px'});
-    tl.to('.hand > svg', 0.75, {rotation: 10});
-    tl.addCallback(function () {
+  // The animation for the rocking effect of the fists
+  tl.to('.selector', 1, {bottom: '-350px'});
+  tl.to('.hand > svg', 0.75, {rotation: 10});
+  tl.addCallback(function() {
     rockText.classList.remove('visuallyhidden');
   });
-    // tl.to('.rockText', 1.25, {scale:2}, 1);
-    tl.to('.hand > svg', 0.75, {rotation: -25});
-    tl.to('.hand > svg', 0.75, {rotation: 10});
-    tl.addCallback(function () {
-      rockText.classList.add('visuallyhidden');
-      paperText.classList.remove('visuallyhidden');
-    });
-    // tl.to('.paperText', 1.25, {opacity:100}, 1);
-    tl.to('.hand > svg', 0.75, {rotation: -25});
-    tl.to('.hand > svg', 0.75, {rotation: 10});
-    tl.addCallback(function () {
-      paperText.classList.add('visuallyhidden');
-      scissorsText.classList.remove('visuallyhidden');
-    });
-    // tl.to('.scissorsText', 1.25, {opacity:100}, 1);
-    tl.to('.hand > svg', 0.75, {rotation: -25});
-    tl.to('.hand > svg', 0.75, {rotation: 0});
-    tl.addCallback(function () {
-      play(player1, player2);
-      scissorsText.classList.add('visuallyhidden');
-      shootText.classList.remove('visuallyhidden');
-    });
-    tl.to('.hand > svg', 1, {}, );
-    tl.addCallback(function () {
-      shootText.classList.add('visuallyhidden');
-    });
+  tl.to('.hand > svg', 0.75, {rotation: -25});
+  tl.to('.hand > svg', 0.75, {rotation: 10});
+  tl.addCallback(function() {
+    rockText.classList.add('visuallyhidden');
+    paperText.classList.remove('visuallyhidden');
+  });
+  tl.to('.hand > svg', 0.75, {rotation: -25});
+  tl.to('.hand > svg', 0.75, {rotation: 10});
+  tl.addCallback(function() {
+    paperText.classList.add('visuallyhidden');
+    scissorsText.classList.remove('visuallyhidden');
+  });
+  tl.to('.hand > svg', 0.75, {rotation: -25});
+  tl.to('.hand > svg', 0.75, {rotation: 0});
+  tl.addCallback(function() {
+    // Run the function to determine the winner
+    play(player1, player2);
+    scissorsText.classList.add('visuallyhidden');
+    shootText.classList.remove('visuallyhidden');
+  });
+  tl.to('.hand > svg', 1, {},);
+  tl.addCallback(function() {
+    shootText.classList.add('visuallyhidden');
+  });
 }
 
-
-
-
-
-
-
+// Determine the winner
 function play(p1, p2) {
   const messageBox = document.querySelector('.messageBox');
   const player1Score = document.querySelector('#player1Score');
   const player2Score = document.querySelector('#player2Score');
   const player1Hand = document.querySelector('.leftHand');
   const player2Hand = document.querySelector('.rightHand');
+
+  // Set the hands to match the user selection and the randomly generated choice of the computer
   changeHand(p1.hand, player1Hand);
   changeHand(p2.hand, player2Hand);
   let winner = {};
   if (p1.hand === p2.hand) {
     let result = `<h1 class="lgLabel">👎  It was a tie, nobody wins!</h1>`;
     messageBox.innerHTML = result;
-  } else if (
-    p1.hand === 'rock' && p2.hand === 'scissors' ||
-    p1.hand === 'scissors' && p2.hand === 'paper' ||
-    p1.hand === 'paper' && p2.hand === 'rock'
-  ) {
+  } else if (p1.hand === 'rock' && p2.hand === 'scissors' || p1.hand === 'scissors' && p2.hand === 'paper' || p1.hand === 'paper' && p2.hand === 'rock') {
     let result = `
       <h1 class="lgLabel">${p1.name} is the winner!</h1>
       `;
@@ -241,15 +244,17 @@ function play(p1, p2) {
     messageBox.innerHTML = result;
     winner = p2;
   }
+  // After determining and announcing the winner, move on to the next function
   gamePlay(p1, p2);
 }
 
-
+// Determine if the game is won or not
 function gamePlay(p1, p2) {
-const messageBox = document.querySelector('.messageBox');
-const roundsToPlay = document.querySelector('#currentRound');
-roundsToPlay.innerHTML = roundCounter;
-const selectorOptions = document.querySelectorAll('.selectorOption');
+  const messageBox = document.querySelector('.messageBox');
+  const roundsToPlay = document.querySelector('#currentRound');
+  roundsToPlay.innerHTML = roundCounter;
+  const selectorOptions = document.querySelectorAll('.selectorOption');
+  // If the game hasn't played enough rounds, reactivate the buttons and restart the sequence
   if (roundCounter < rounds) {
     // trigger selector
     for (selector of selectorOptions) {
@@ -257,9 +262,13 @@ const selectorOptions = document.querySelectorAll('.selectorOption');
         selector.removeAttribute("disabled");
       }
     }
-    TweenLite.to('.selector', 1, {bottom: '10px', delay: 1});
-
+    // Show the button selector
+    TweenLite.to('.selector', 1, {
+      bottom: '10px',
+      delay: 1
+    });
     roundCounter++;
+    // If both players have the same number of wins after the rounds, do a tiebreaker until someone wins
   } else if (p1.wins === p2.wins) {
     //tiebreaker round
     for (selector of selectorOptions) {
@@ -272,7 +281,11 @@ const selectorOptions = document.querySelectorAll('.selectorOption');
     Prepare for a<br>tiebreaker round!</h1>
     `;
     //trigger selector again
-    TweenLite.to('.selector', 1, {bottom: '10px', delay: 1});
+    TweenLite.to('.selector', 1, {
+      bottom: '10px',
+      delay: 1
+    });
+    // Once someone has more wins at the end, announce the winner and display a button to restart the game
   } else {
     if (p1.wins > p2.wins) {
       messageBox.innerHTML = `
@@ -288,11 +301,10 @@ const selectorOptions = document.querySelectorAll('.selectorOption');
     // give play again button
 
   }
-    // declare winner
-    // console.log(p1);
-    // console.log(p2);
-    // console.log(rounds);
-
+  // declare winner
+  // console.log(p1);
+  // console.log(p2);
+  // console.log(rounds);
 
 }
 
@@ -303,44 +315,44 @@ function openingScreen() {
   const scissorsText = document.querySelector('.scissorsText');
   const shootText = document.querySelector('.shootText');
   const playingContainer = document.querySelector('.playingContainer');
-  let tl = new TimelineMax({repeat:-1});
-    tl.to('.hand > svg', 0.75, {rotation: 10});
-    tl.addCallback(function () {
+  let tl = new TimelineMax({repeat: -1});
+  tl.to('.hand > svg', 0.75, {rotation: 10});
+  tl.addCallback(function() {
     rockText.classList.remove('visuallyhidden');
   }, 1);
-    // tl.to('.rockText', 1.25, {scale:2}, 1);
-    tl.to('.hand > svg', 0.75, {rotation: -25});
-    tl.to('.hand > svg', 0.75, {rotation: 10});
-    tl.addCallback(function () {
-      rockText.classList.add('visuallyhidden');
-      paperText.classList.remove('visuallyhidden');
-    });
-    // tl.to('.paperText', 1.25, {opacity:100}, 1);
-    tl.to('.hand > svg', 0.75, {rotation: -25});
-    tl.to('.hand > svg', 0.75, {rotation: 10});
-    tl.addCallback(function () {
-      paperText.classList.add('visuallyhidden');
-      scissorsText.classList.remove('visuallyhidden');
-    });
-    // tl.to('.scissorsText', 1.25, {opacity:100}, 1);
-    tl.to('.hand > svg', 0.75, {rotation: -25});
-    tl.to('.hand > svg', 0.75, {rotation: 0});
-    tl.addCallback(function () {
-      scissorsText.classList.add('visuallyhidden');
-      shootText.classList.remove('visuallyhidden');
-    });
-    tl.to('.hand > svg', 1, {}, );
-    tl.addCallback(function () {
-      shootText.classList.add('visuallyhidden');
-    });
-    // tl.to('.shootText', 1.25, {opacity:100}, 1);
-    tl.addLabel('end');
+  // tl.to('.rockText', 1.25, {scale:2}, 1);
+  tl.to('.hand > svg', 0.75, {rotation: -25});
+  tl.to('.hand > svg', 0.75, {rotation: 10});
+  tl.addCallback(function() {
+    rockText.classList.add('visuallyhidden');
+    paperText.classList.remove('visuallyhidden');
+  });
+  // tl.to('.paperText', 1.25, {opacity:100}, 1);
+  tl.to('.hand > svg', 0.75, {rotation: -25});
+  tl.to('.hand > svg', 0.75, {rotation: 10});
+  tl.addCallback(function() {
+    paperText.classList.add('visuallyhidden');
+    scissorsText.classList.remove('visuallyhidden');
+  });
+  // tl.to('.scissorsText', 1.25, {opacity:100}, 1);
+  tl.to('.hand > svg', 0.75, {rotation: -25});
+  tl.to('.hand > svg', 0.75, {rotation: 0});
+  tl.addCallback(function() {
+    scissorsText.classList.add('visuallyhidden');
+    shootText.classList.remove('visuallyhidden');
+  });
+  tl.to('.hand > svg', 1, {},);
+  tl.addCallback(function() {
+    shootText.classList.add('visuallyhidden');
+  });
+  // tl.to('.shootText', 1.25, {opacity:100}, 1);
+  tl.addLabel('end');
 
   const playGameButton = document.querySelector('#playGame');
   const introBox = document.querySelector('.introBox');
-  playGameButton.addEventListener('click', function(){
-    tl.to('.introBox', 0.5, {opacity:0});
-    tl.eventCallback('onUpdate', function () {
+  playGameButton.addEventListener('click', function() {
+    tl.to('.introBox', 0.5, {opacity: 0});
+    tl.eventCallback('onUpdate', function() {
       // tl.kill();
       // tl.restart();
       tl.seek(0);
@@ -370,11 +382,10 @@ openingScreen();
 // getPlayerName();
 // gamePlay(player1, player2);
 
-
 // This function takes the player's hand choice and returns the SVG for the appropriate hand motion to replace the SVG of the fist
 function changeHand(hand, handContainer) {
-    switch (hand) {
-      case 'paper':
+  switch (hand) {
+    case 'paper':
       handContainer.innerHTML = `
       <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
          viewBox="0 0 128 128" style="enable-background:new 0 0 128 128;" xml:space="preserve">
@@ -391,9 +402,9 @@ function changeHand(hand, handContainer) {
       </g>
       </svg>
       `;
-        break;
+      break;
 
-      case 'scissors':
+    case 'scissors':
       handContainer.innerHTML = `
       <svg version="1.1" id="Layer_2" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
          viewBox="0 0 128 128" style="enable-background:new 0 0 128 128;" xml:space="preserve">
@@ -411,8 +422,8 @@ function changeHand(hand, handContainer) {
       </g>
       </svg>
       `;
-        break;
-      default:
+      break;
+    default:
       handContainer.innerHTML = `
       <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
            viewBox="0 0 128 128" style="enable-background:new 0 0 128 128;" xml:space="preserve">

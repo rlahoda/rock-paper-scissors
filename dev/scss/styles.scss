@@ -32,7 +32,7 @@ $bp-xsmall: 600px;
 $bp-small: 780px;
 $bp-med: 1060px;
 $bp-large: 1400px;
-$min_width: 400px;
+$min_width: 300px;
 $max_width: 1200px;
 
 // Colors
@@ -45,7 +45,7 @@ body {
 }
 
 
-$h1_min_font: 20px;
+$h1_min_font: 18px;
 $h1_max_font: 26px;
 $h2_min_font: 15px;
 $h2_max_font: 20px;
@@ -73,7 +73,6 @@ h2 {
 .regularText {
   @include fluid-type($min_width, $max_width, $h1_min_font, $h1_max_font);
   color: $mainText;
-  padding: 5px;
 }
 
 a {
@@ -85,7 +84,6 @@ a {
   font-family: 'Press Start 2P', cursive;
   @include fluid-type($min_width, $max_width, $h1_min_font, $h1_max_font);
   color: $mainText;
-  padding: 5px;
 }
 
 .messageText {
@@ -252,7 +250,7 @@ li {
 }
 
 .scoreBox {
-  padding:  10px 20px;
+  padding:  0 20px;
   @include respond-at($bp-small) {
     padding:  10px 20px;
     }
@@ -345,7 +343,7 @@ li {
   float: left;
   left: 50%;
   bottom: -350px;
-  padding: 20px 10px;
+  padding: 5px 10px;
   width: 95%;
   transform: translate(-50%,0);
   background-image: url("/assets/selectorBG.jpg");
@@ -377,8 +375,8 @@ li {
   justify-content: center;
   align-items: center;
   width: 90%;
-  margin: 10px;
-  padding: 10px;
+  margin: 5px 5px;
+  padding: 5px 10px;
   border: ridge 4px orange;
   box-shadow: 3px 3px 0 brown;
   &:hover {
@@ -394,6 +392,8 @@ li {
   @include respond-at($bp-small) {
     width: auto;
     flex-direction: column;
+    margin: 10px;
+    padding: 10px;
     }
 }
 

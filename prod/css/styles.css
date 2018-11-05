@@ -32,19 +32,19 @@ body {
 h1 {
   text-transform: capitalize; }
   h1 {
-    font-size: 20px; }
-    @media screen and (min-width: 400px) {
+    font-size: 18px; }
+    @media screen and (min-width: 300px) {
       h1 {
-        font-size: calc(20px + 6 * ((100vw - 400px) / 800)); } }
+        font-size: calc(18px + 8 * ((100vw - 300px) / 900)); } }
     @media screen and (min-width: 1200px) {
       h1 {
         font-size: 26px; } }
 
 h2 {
-  font-size: 20px; }
-  @media screen and (min-width: 400px) {
+  font-size: 18px; }
+  @media screen and (min-width: 300px) {
     h2 {
-      font-size: calc(20px + 6 * ((100vw - 400px) / 800)); } }
+      font-size: calc(18px + 8 * ((100vw - 300px) / 900)); } }
   @media screen and (min-width: 1200px) {
     h2 {
       font-size: 26px; } }
@@ -53,21 +53,20 @@ h2 {
   color: gold; }
   .rpsText {
     font-size: 30px; }
-    @media screen and (min-width: 400px) {
+    @media screen and (min-width: 300px) {
       .rpsText {
-        font-size: calc(30px + 60 * ((100vw - 400px) / 800)); } }
+        font-size: calc(30px + 60 * ((100vw - 300px) / 900)); } }
     @media screen and (min-width: 1200px) {
       .rpsText {
         font-size: 90px; } }
 
 .regularText {
-  color: gold;
-  padding: 5px; }
+  color: gold; }
   .regularText {
-    font-size: 20px; }
-    @media screen and (min-width: 400px) {
+    font-size: 18px; }
+    @media screen and (min-width: 300px) {
       .regularText {
-        font-size: calc(20px + 6 * ((100vw - 400px) / 800)); } }
+        font-size: calc(18px + 8 * ((100vw - 300px) / 900)); } }
     @media screen and (min-width: 1200px) {
       .regularText {
         font-size: 26px; } }
@@ -78,13 +77,12 @@ a {
 
 .selectorOption {
   font-family: 'Press Start 2P', cursive;
-  color: gold;
-  padding: 5px; }
+  color: gold; }
   .selectorOption {
-    font-size: 20px; }
-    @media screen and (min-width: 400px) {
+    font-size: 18px; }
+    @media screen and (min-width: 300px) {
       .selectorOption {
-        font-size: calc(20px + 6 * ((100vw - 400px) / 800)); } }
+        font-size: calc(18px + 8 * ((100vw - 300px) / 900)); } }
     @media screen and (min-width: 1200px) {
       .selectorOption {
         font-size: 26px; } }
@@ -93,9 +91,9 @@ a {
   filter: drop-shadow(4px 4px 0 brown); }
   .messageText {
     font-size: 30px; }
-    @media screen and (min-width: 400px) {
+    @media screen and (min-width: 300px) {
       .messageText {
-        font-size: calc(30px + 60 * ((100vw - 400px) / 800)); } }
+        font-size: calc(30px + 60 * ((100vw - 300px) / 900)); } }
     @media screen and (min-width: 1200px) {
       .messageText {
         font-size: 90px; } }
@@ -105,10 +103,10 @@ a {
   filter: drop-shadow(3px 3px 0 brown);
   margin-bottom: 25px; }
   .medLabel {
-    font-size: 20px; }
-    @media screen and (min-width: 400px) {
+    font-size: 18px; }
+    @media screen and (min-width: 300px) {
       .medLabel {
-        font-size: calc(20px + 6 * ((100vw - 400px) / 800)); } }
+        font-size: calc(18px + 8 * ((100vw - 300px) / 900)); } }
     @media screen and (min-width: 1200px) {
       .medLabel {
         font-size: 26px; } }
@@ -120,9 +118,9 @@ a {
   line-height: 1.5; }
   .lgLabel {
     font-size: 20px; }
-    @media screen and (min-width: 400px) {
+    @media screen and (min-width: 300px) {
       .lgLabel {
-        font-size: calc(20px + 20 * ((100vw - 400px) / 800)); } }
+        font-size: calc(20px + 20 * ((100vw - 300px) / 900)); } }
     @media screen and (min-width: 1200px) {
       .lgLabel {
         font-size: 40px; } }
@@ -131,9 +129,9 @@ a {
   filter: drop-shadow(2px 2px 0 brown); }
   .rulesList {
     font-size: 15px; }
-    @media screen and (min-width: 400px) {
+    @media screen and (min-width: 300px) {
       .rulesList {
-        font-size: calc(15px + 5 * ((100vw - 400px) / 800)); } }
+        font-size: calc(15px + 5 * ((100vw - 300px) / 900)); } }
     @media screen and (min-width: 1200px) {
       .rulesList {
         font-size: 20px; } }
@@ -172,9 +170,9 @@ a {
   width: 90vw; }
   .enterNameField {
     font-size: 20px; }
-    @media screen and (min-width: 400px) {
+    @media screen and (min-width: 300px) {
       .enterNameField {
-        font-size: calc(20px + 20 * ((100vw - 400px) / 800)); } }
+        font-size: calc(20px + 20 * ((100vw - 300px) / 900)); } }
     @media screen and (min-width: 1200px) {
       .enterNameField {
         font-size: 40px; } }
@@ -191,9 +189,9 @@ a {
   padding: 5px; }
   .enterNameButton {
     font-size: 20px; }
-    @media screen and (min-width: 400px) {
+    @media screen and (min-width: 300px) {
       .enterNameButton {
-        font-size: calc(20px + 20 * ((100vw - 400px) / 800)); } }
+        font-size: calc(20px + 20 * ((100vw - 300px) / 900)); } }
     @media screen and (min-width: 1200px) {
       .enterNameButton {
         font-size: 40px; } }
@@ -214,9 +212,9 @@ a {
   width: 10vw; }
   .enterRoundsField {
     font-size: 20px; }
-    @media screen and (min-width: 400px) {
+    @media screen and (min-width: 300px) {
       .enterRoundsField {
-        font-size: calc(20px + 20 * ((100vw - 400px) / 800)); } }
+        font-size: calc(20px + 20 * ((100vw - 300px) / 900)); } }
     @media screen and (min-width: 1200px) {
       .enterRoundsField {
         font-size: 40px; } }
@@ -285,7 +283,7 @@ li {
       margin: 15px; } }
 
 .scoreBox {
-  padding: 10px 20px; }
+  padding: 0 20px; }
   @media only screen and (min-width: 780px) {
     .scoreBox {
       padding: 10px 20px; } }
@@ -381,7 +379,7 @@ li {
   float: left;
   left: 50%;
   bottom: -350px;
-  padding: 20px 10px;
+  padding: 5px 10px;
   width: 95%;
   transform: translate(-50%, 0);
   background-image: url("/assets/selectorBG.jpg");
@@ -422,8 +420,8 @@ li {
   -ms-flex-align: center;
       align-items: center;
   width: 90%;
-  margin: 10px;
-  padding: 10px;
+  margin: 5px 5px;
+  padding: 5px 10px;
   border: ridge 4px orange;
   box-shadow: 3px 3px 0 brown; }
   .selectorOption:hover {
@@ -438,7 +436,9 @@ li {
     .selectorOption {
       width: auto;
       -ms-flex-direction: column;
-          flex-direction: column; } }
+          flex-direction: column;
+      margin: 10px;
+      padding: 10px; } }
 
 .messageBox {
   position: fixed;
