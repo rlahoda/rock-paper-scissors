@@ -133,10 +133,10 @@ function playRound(hand) {
   const shootText = document.querySelector('.shootText');
   const player1Hand = document.querySelector('.leftHand');
   const player2Hand = document.querySelector('.rightHand');
-  const selectorOptions = document.querySelectorAll('.selectorOptions');
+  const selectorOptions = document.querySelectorAll('button.selectorOption');
   for (selector of selectorOptions) {
-    if (selector.disabled = false) {
-      selector.disabled = true;
+    if (!selector.hasAttribute('disabled')) {
+      selector.setAttribute("disabled", "disabled");
     }
   }
 
@@ -194,7 +194,7 @@ function play(p1, p2) {
   changeHand(p2.hand, player2Hand);
   let winner = {};
   if (p1.hand === p2.hand) {
-    let result = `<h1>👎  It was a tie, nobody wins!</h1>`;
+    let result = `<h1 class="lgLabel">👎  It was a tie, nobody wins!</h1>`;
     messageBox.innerHTML = result;
   } else if (
     p1.hand === 'rock' && p2.hand === 'scissors' ||
@@ -202,7 +202,7 @@ function play(p1, p2) {
     p1.hand === 'paper' && p2.hand === 'rock'
   ) {
     let result = `
-      <h1>${p1.name} is the winner!</h1>
+      <h1 class="lgLabel">${p1.name} is the winner!</h1>
       `;
     p1.wins++;
     player1Score.innerHTML = player1.wins;
@@ -210,7 +210,7 @@ function play(p1, p2) {
     winner = p1;
   } else {
     let result = `
-      <h1>${p2.name} is the winner!</h1>
+      <h1 class="lgLabel">${p2.name} is the winner!</h1>
       `;
     p2.wins++;
     player2Score.innerHTML = player2.wins;
@@ -223,16 +223,14 @@ function play(p1, p2) {
 
 function gamePlay(p1, p2) {
 const messageBox = document.querySelector('.messageBox');
-// console.log(rounds);
 const roundsToPlay = document.querySelector('#currentRound');
 roundsToPlay.innerHTML = roundCounter;
 const selectorOptions = document.querySelectorAll('.selectorOption');
   if (roundCounter < rounds) {
     // trigger selector
-
     for (selector of selectorOptions) {
-      if (selector.disabled = true) {
-        selector.disabled = false;
+      if (selector.hasAttribute('disabled')) {
+        selector.removeAttribute("disabled");
       }
     }
     TweenLite.to('.selector', 1, {bottom: '10px', delay: 1});
@@ -240,27 +238,27 @@ const selectorOptions = document.querySelectorAll('.selectorOption');
     roundCounter++;
   } else if (p1.wins === p2.wins) {
     //tiebreaker round
-    for (selector of selectorContainer) {
-      if (selector.disabled = true) {
-        selector.disabled = false;
+    for (selector of selectorOptions) {
+      if (selector.hasAttribute('disabled')) {
+        selector.removeAttribute("disabled");
       }
     }
     messageBox.innerHTML = `
   <h1 class="lgLabel">It's a tie!<br>
-    Prepare for a tiebreaker round!</h1>
+    Prepare for a<br>tiebreaker round!</h1>
     `;
     //trigger selector again
     TweenLite.to('.selector', 1, {bottom: '10px', delay: 1});
   } else {
     if (p1.wins > p2.wins) {
       messageBox.innerHTML = `
-    <span class="fullWidth"><h1 class="lgLabel">${p1.name} wins the game!</h1></span>
-      <a href="#" id="playAgainButton" class="enterNameButton" onClick="playerSetup()">Play Again!</a>
+    <div class="woodBackground playAgainContainer"><span class="fullWidth"><h1 class="lgLabel">${p1.name} wins the game!</h1></span>
+      <a href="#" id="playAgainButton" class="enterNameButton" onClick="playerSetup()">Play Again!</a></div>
       `;
     } else {
       messageBox.innerHTML = `
-    <span  class="fullWidth"><h1 class="lgLabel">${p2.name} wins the game!</h1></span>
-      <a href="#" id="playAgainButton" class="enterNameButton" onClick="playerSetup()">Play Again!</a>
+    <div class="woodBackground playAgainContainer"><span  class="fullWidth"><h1 class="lgLabel">${p2.name} wins the game!</h1></span>
+      <a href="#" id="playAgainButton" class="enterNameButton" onClick="playerSetup()">Play Again!</a></div>
       `;
     }
     // give play again button
