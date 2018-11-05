@@ -30,13 +30,15 @@ body {
   font-family: 'Press Start 2P', cursive; }
 
 h1 {
-  font-size: 20px; }
-  @media screen and (min-width: 400px) {
-    h1 {
-      font-size: calc(20px + 6 * ((100vw - 400px) / 800)); } }
-  @media screen and (min-width: 1200px) {
-    h1 {
-      font-size: 26px; } }
+  text-transform: capitalize; }
+  h1 {
+    font-size: 20px; }
+    @media screen and (min-width: 400px) {
+      h1 {
+        font-size: calc(20px + 6 * ((100vw - 400px) / 800)); } }
+    @media screen and (min-width: 1200px) {
+      h1 {
+        font-size: 26px; } }
 
 h2 {
   font-size: 20px; }
@@ -114,7 +116,8 @@ a {
 .lgLabel {
   color: brown;
   filter: drop-shadow(2px 2px 0 gold);
-  margin-bottom: 25px; }
+  margin-bottom: 25px;
+  line-height: 1.5; }
   .lgLabel {
     font-size: 20px; }
     @media screen and (min-width: 400px) {
@@ -142,10 +145,14 @@ a {
   color: gold;
   border: ridge 4px orange;
   box-shadow: 3px 3px 0 brown;
-  padding: 25px; }
+  padding: 5px; }
+  @media only screen and (min-width: 780px) {
+    .woodBackground {
+      padding: 25px; } }
 
 .playAgainContainer {
-  background-image: url("/assets/roundTrackerBG.jpg"); }
+  background-image: url("/assets/roundTrackerBG.jpg");
+  padding: 15px; }
 
 .enterNameField {
   color: gold;
@@ -223,40 +230,77 @@ a {
 li {
   margin-bottom: 0.5em; }
 
-.roundTracker {
+.scoreBoard {
   position: fixed;
-  float: left;
-  left: 50%;
-  top: -100px;
-  padding: 20px 50px;
-  transform: translate(-50%, 0);
-  background-image: url("/assets/roundTrackerBG.jpg"); }
-
-.scoreboard {
-  min-width: 50%;
-  height: 100px;
+  width: 100%;
+  top: -250px;
   display: -ms-flexbox;
   display: flex;
-  -ms-flex-direction: column;
-      flex-direction: column;
+  -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
+  -ms-flex-direction: row;
+      flex-direction: row;
+  -ms-flex-pack: center;
+      justify-content: center; }
+  @media only screen and (min-width: 780px) {
+    .scoreBoard {
+      -ms-flex-wrap: nowrap;
+          flex-wrap: nowrap; } }
+
+.playerScoreBoard {
+  background-image: url("/assets/introBG.jpg");
+  margin: 0;
+  -ms-flex: 1 1 auto;
+      flex: 1 1 auto;
+  width: 100%;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-direction: row;
+      flex-direction: row;
+  -ms-flex-pack: center;
+      justify-content: center;
   -ms-flex-align: center;
       align-items: center;
-  -ms-flex-pack: distribute;
-      justify-content: space-around;
-  position: relative;
-  background-image: url("/assets/scoreBG.jpg"); }
+  -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
+  -ms-flex-order: 2;
+      order: 2;
+  word-break: break-all;
+  text-align: center; }
+  @media only screen and (min-width: 600px) {
+    .playerScoreBoard {
+      width: 40%; } }
   @media only screen and (min-width: 780px) {
-    .scoreboard {
-      min-width: 200px;
-      height: 300px; } }
+    .playerScoreBoard {
+      width: 25%;
+      margin: 15px; } }
 
-.player1 {
-  float: left;
-  left: -400px; }
+.scoreBox {
+  padding: 10px 20px; }
+  @media only screen and (min-width: 780px) {
+    .scoreBox {
+      padding: 10px 20px; } }
 
-.player2 {
-  float: right;
-  right: -400px; }
+.rounds {
+  background-image: url("/assets/introBG.jpg");
+  -ms-flex: 1 1 auto;
+      flex: 1 1 auto;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-pack: center;
+      justify-content: center;
+  -ms-flex-align: center;
+      align-items: center;
+  width: 100%;
+  text-align: center;
+  line-height: 1.25;
+  -ms-flex-order: 1;
+      order: 1; }
+  @media only screen and (min-width: 780px) {
+    .rounds {
+      -ms-flex-order: 2;
+          order: 2;
+      width: 25%; } }
 
 .playingContainer {
   position: absolute;
@@ -329,8 +373,9 @@ li {
   position: fixed;
   float: left;
   left: 50%;
-  bottom: -300px;
-  padding: 20px 50px;
+  bottom: -350px;
+  padding: 20px 10px;
+  width: 95%;
   transform: translate(-50%, 0);
   background-image: url("/assets/selectorBG.jpg");
   display: -ms-flexbox;
@@ -340,24 +385,37 @@ li {
   -ms-flex-align: center;
       align-items: center;
   -ms-flex-pack: center;
-      justify-content: center; }
+      justify-content: center;
+  text-align: center; }
+  @media only screen and (min-width: 780px) {
+    .selector {
+      padding: 20px 50px;
+      width: auto; } }
 
 .selectorContainer {
+  width: 100%;
   display: -ms-flexbox;
   display: flex;
+  -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
   -ms-flex-pack: distribute;
       justify-content: space-around; }
+  @media only screen and (min-width: 780px) {
+    .selectorContainer {
+      -ms-flex-wrap: nowrap;
+          flex-wrap: nowrap; } }
 
 .selectorOption {
   background: none;
   display: -ms-flexbox;
   display: flex;
-  -ms-flex-direction: column;
-      flex-direction: column;
+  -ms-flex-direction: row;
+      flex-direction: row;
   -ms-flex-pack: center;
       justify-content: center;
   -ms-flex-align: center;
       align-items: center;
+  width: 90%;
   margin: 10px;
   padding: 10px;
   border: ridge 4px orange;
@@ -370,6 +428,11 @@ li {
     color: white;
     border: ridge 4px white;
     box-shadow: 3px 3px 0 red; }
+  @media only screen and (min-width: 780px) {
+    .selectorOption {
+      width: auto;
+      -ms-flex-direction: column;
+          flex-direction: column; } }
 
 .messageBox {
   position: fixed;

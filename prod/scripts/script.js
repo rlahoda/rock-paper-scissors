@@ -16,7 +16,33 @@ function getHand() {
   return hands[parseInt((Math.random() * 10) % 3)];
 }
 
+function getUser2Name() {
+  const url = "https://randomuser.me/api/?inc=name";
+  return new Promise(function(resolve, reject) {
+  // the ajax request
+    let xhr = new XMLHttpRequest();
+    let response;
+    let name = '';
+    xhr.open("GET", url, true);
+    xhr.onreadystatechange = callback;
+    xhr.send();
+    function callback() {
+      if (xhr.readyState == 4) {
+        response = JSON.parse(xhr.responseText);
+        name = response.results[0].name.first;
+        console.log(name);
+        resolve(name);
+        reject('Harriet');
+      }
+    }
+  })
+}
+
 function getPlayerName() {
+  getUser2Name().then(function(response) {
+    console.log(response);
+    player2.name = response;
+  });
   let tl = new TimelineMax();
   const messageBox = document.querySelector('.messageBox');
  messageBox.innerHTML = `
@@ -104,9 +130,7 @@ function roundsSetup() {
   tl.to('.playingContainer', 1, { top: '25%'});
   playingContainer.classList.remove('visuallyhidden');
 });
-  tl.to('#roundTracker', 1, {top: 5});
-  tl.to('.player1', 1, {left: 5}, 0.5);
-  tl.to('.player2', 1, {right: 5}, 0.5);
+  tl.to('.scoreBoard', 1, {top: 5});
 
   // get the value from the form field for rounds
   rounds = document.querySelector('#rounds').value;
@@ -145,7 +169,7 @@ function playRound(hand) {
   changeHand('rock', player2Hand);
   // determine winner
   let tl = new TimelineMax();
-    tl.to('.selector', 1, {bottom: '-300px'});
+    tl.to('.selector', 1, {bottom: '-350px'});
     tl.to('.hand > svg', 0.75, {rotation: 10});
     tl.addCallback(function () {
     rockText.classList.remove('visuallyhidden');

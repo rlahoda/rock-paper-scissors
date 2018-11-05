@@ -50,6 +50,7 @@ $name_max_font: 40px;
 
 h1 {
   @include fluid-type($min_width, $max_width, $h1_min_font, $h1_max_font);
+  text-transform: capitalize;
 }
 
 h2 {
@@ -99,6 +100,7 @@ a {
   @include fluid-type($min_width, $max_width, $name_min_font, $name_max_font);
   filter: drop-shadow( 2px 2px 0 $mainText );
   margin-bottom: 25px;
+  line-height: 1.5;
 }
 
 .rulesList {
@@ -114,11 +116,15 @@ a {
   color: $mainText;
   border: ridge 4px orange;
   box-shadow: 3px 3px 0 brown;
-  padding: 25px;
+  padding: 5px;
+  @include respond-at($bp-small) {
+    padding: 25px;
+  }
 }
 .playAgainContainer {
   background-image: url("/assets/roundTrackerBG.jpg");
   // background-image: url("https://raw.githubusercontent.com/rlahoda/rock-paper-scissors/master/dev/assets/roundTrackerBG.jpg");
+  padding: 15px;
 }
 
 .enterNameField {
@@ -193,42 +199,64 @@ li {
   margin-bottom: 0.5em;
 }
 
-.roundTracker {
+.scoreBoard {
   position: fixed;
-  float: left;
-  left: 50%;
-  top: -100px;
-  padding: 20px 50px;
-  transform: translate(-50%,0);
-  background-image: url("/assets/roundTrackerBG.jpg");
-  // background-image: url("https://raw.githubusercontent.com/rlahoda/rock-paper-scissors/master/dev/assets/roundTrackerBG.jpg");
-}
-
-.scoreboard {
-  min-width: 50%;
-  height: 100px;
+  width: 100%;
+  top: -250px;
   display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: space-around;
-  position: relative;
-
-  background-image: url("/assets/scoreBG.jpg");
-    // background-image: url("https://raw.githubusercontent.com/rlahoda/rock-paper-scissors/master/dev/assets/scoreBG.jpg");
+  flex-wrap: wrap;
+  flex-direction: row;
+  justify-content: center;
   @include respond-at($bp-small) {
-    min-width: 200px;
-    height: 300px;
+    flex-wrap: nowrap;
     }
 }
 
-.player1 {
-  float: left;
-  left: -400px;
+.playerScoreBoard {
+  background-image: url("/assets/introBG.jpg");
+  // background-image: url("https://raw.githubusercontent.com/rlahoda/rock-paper-scissors/master/dev/assets/introBG.jpg");
+  margin: 0;
+  flex: 1 1 auto;
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  order: 2;
+  word-break: break-all;
+  text-align: center;
+  @include respond-at($bp-xsmall) {
+    width: 40%;
+    }
+  @include respond-at($bp-small) {
+    width: 25%;
+    margin: 15px;
+    }
 }
 
-.player2 {
-  float: right;
-  right: -400px;
+.scoreBox {
+  padding:  10px 20px;
+  @include respond-at($bp-small) {
+    padding:  10px 20px;
+    }
+}
+
+.rounds {
+  background-image: url("/assets/introBG.jpg");
+  // background-image: url("https://raw.githubusercontent.com/rlahoda/rock-paper-scissors/master/dev/assets/introBG.jpg");
+  flex: 1 1 auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  text-align: center;
+  line-height: 1.25;
+  order: 1;
+  @include respond-at($bp-small) {
+    order: 2;
+    width: 25%;
+    }
 }
 
 .playingContainer {
@@ -303,8 +331,9 @@ li {
   position: fixed;
   float: left;
   left: 50%;
-  bottom: -300px;
-  padding: 20px 50px;
+  bottom: -350px;
+  padding: 20px 10px;
+  width: 95%;
   transform: translate(-50%,0);
   background-image: url("/assets/selectorBG.jpg");
   // background-image: url("https://raw.githubusercontent.com/rlahoda/rock-paper-scissors/master/dev/assets/selectorBG.jpg");
@@ -312,19 +341,30 @@ li {
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  text-align: center;
+  @include respond-at($bp-small) {
+    padding: 20px 50px;
+    width: auto;
+    }
 }
 
 .selectorContainer {
+  width: 100%;
   display: flex;
+  flex-wrap: wrap;
   justify-content: space-around;
+  @include respond-at($bp-small) {
+    flex-wrap: nowrap;
+    }
 }
 
 .selectorOption {
   background: none;
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   justify-content: center;
   align-items: center;
+  width: 90%;
   margin: 10px;
   padding: 10px;
   border: ridge 4px orange;
@@ -339,6 +379,10 @@ li {
     border: ridge 4px white;
     box-shadow: 3px 3px 0 red;
   }
+  @include respond-at($bp-small) {
+    width: auto;
+    flex-direction: column;
+    }
 }
 
 .messageBox {
