@@ -90,7 +90,7 @@ a {
         font-size: 26px; } }
 
 .messageText {
-  filter: drop-shadow(2px 2px 0 brown); }
+  filter: drop-shadow(4px 4px 0 brown); }
   .messageText {
     font-size: 30px; }
     @media screen and (min-width: 400px) {
@@ -102,7 +102,7 @@ a {
 
 .medLabel {
   color: gold;
-  filter: drop-shadow(2px 2px 0 brown);
+  filter: drop-shadow(3px 3px 0 brown);
   margin-bottom: 25px; }
   .medLabel {
     font-size: 20px; }
@@ -137,6 +137,14 @@ a {
     @media screen and (min-width: 1200px) {
       .rulesList {
         font-size: 20px; } }
+
+.playerScoreBoard {
+  word-break: break-all;
+  text-align: center; }
+
+.rounds {
+  text-align: center;
+  line-height: 1.25; }
 
 .woodBackground {
   background-position: center;
@@ -217,6 +225,9 @@ a {
   text-align: center;
   filter: drop-shadow(2px 2px 0 brown); }
 
+.selector {
+  text-align: center; }
+
 .container {
   width: 100%;
   min-height: 100vh;
@@ -264,9 +275,7 @@ li {
   -ms-flex-wrap: wrap;
       flex-wrap: wrap;
   -ms-flex-order: 2;
-      order: 2;
-  word-break: break-all;
-  text-align: center; }
+      order: 2; }
   @media only screen and (min-width: 600px) {
     .playerScoreBoard {
       width: 40%; } }
@@ -292,8 +301,6 @@ li {
   -ms-flex-align: center;
       align-items: center;
   width: 100%;
-  text-align: center;
-  line-height: 1.25;
   -ms-flex-order: 1;
       order: 1; }
   @media only screen and (min-width: 780px) {
@@ -385,8 +392,7 @@ li {
   -ms-flex-align: center;
       align-items: center;
   -ms-flex-pack: center;
-      justify-content: center;
-  text-align: center; }
+      justify-content: center; }
   @media only screen and (min-width: 780px) {
     .selector {
       padding: 20px 50px;

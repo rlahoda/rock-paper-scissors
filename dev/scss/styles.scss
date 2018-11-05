@@ -1,4 +1,5 @@
 @import "partials/reset";
+// Mixins
 @function strip-unit($value) {
   @return $value / ($value * 0 + 1);
 }
@@ -25,18 +26,25 @@
     @content;
   }
 }
+
+// Media Query Sizes
 $bp-xsmall: 600px;
 $bp-small: 780px;
 $bp-med: 1060px;
-$bp-large: 1400px; // colors
+$bp-large: 1400px;
+$min_width: 400px;
+$max_width: 1200px;
+
+// Colors
 $mainText: gold;
+
+
 // Typography
 body {
   font-family: 'Press Start 2P', cursive;
 }
 
-$min_width: 400px;
-$max_width: 1200px;
+
 $h1_min_font: 20px;
 $h1_max_font: 26px;
 $h2_min_font: 15px;
@@ -68,8 +76,6 @@ h2 {
   padding: 5px;
 }
 
-.roundNumber {}
-
 a {
   text-decoration: none;
   color: inherit;
@@ -84,14 +90,14 @@ a {
 
 .messageText {
   @include fluid-type($min_width, $max_width, $msg_min_font, $msg_max_font);
-  filter: drop-shadow( 2px 2px 0 brown );
-  // box-shadow: 1px 1px 0 red;
+  filter: drop-shadow( 4px 4px 0 brown );
+
 }
 
 .medLabel {
   color: $mainText;
   @include fluid-type($min_width, $max_width, $h1_min_font, $h1_max_font);
-  filter: drop-shadow( 2px 2px 0 brown );
+  filter: drop-shadow( 3px 3px 0 brown );
   margin-bottom: 25px;
 }
 
@@ -107,8 +113,18 @@ a {
   @include fluid-type($min_width, $max_width, $h3_min_font, $h3_max_font);
   filter: drop-shadow( 2px 2px 0 brown );
 }
-// Appearance
 
+.playerScoreBoard {
+  word-break: break-all;
+  text-align: center;
+}
+
+.rounds {
+  text-align: center;
+  line-height: 1.25;
+}
+
+// Appearance
 .woodBackground {
   background-position: center;
   background-repeat: no-repeat;
@@ -180,7 +196,9 @@ a {
   filter: drop-shadow( 2px 2px 0 brown );
 }
 
-
+.selector {
+text-align: center;
+}
 
 // Layout
 .container {
@@ -224,8 +242,6 @@ li {
   align-items: center;
   flex-wrap: wrap;
   order: 2;
-  word-break: break-all;
-  text-align: center;
   @include respond-at($bp-xsmall) {
     width: 40%;
     }
@@ -250,8 +266,6 @@ li {
   justify-content: center;
   align-items: center;
   width: 100%;
-  text-align: center;
-  line-height: 1.25;
   order: 1;
   @include respond-at($bp-small) {
     order: 2;
@@ -278,8 +292,6 @@ li {
   justify-content: center;
   align-items: center;
 }
-
-
 
 .hand {
   width: 100px;
@@ -319,6 +331,7 @@ li {
     }
 }
 
+// SVG Styles for the hands
 .st0 {
   fill: none;
   stroke: $mainText;
@@ -341,7 +354,6 @@ li {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  text-align: center;
   @include respond-at($bp-small) {
     padding: 20px 50px;
     width: auto;
