@@ -290,12 +290,12 @@ function gamePlay(p1, p2) {
     if (p1.wins > p2.wins) {
       messageBox.innerHTML = `
     <div class="woodBackground playAgainContainer"><span class="fullWidth"><h1 class="lgLabel">${p1.name} wins the game!</h1></span>
-      <a href="#" id="playAgainButton" class="enterNameButton" onClick="playerSetup()">Play Again!</a></div>
+      <a href="#" id="playAgainButton" class="enterNameButton" onClick="getRoundsToPlay()">Play Again!</a></div>
       `;
     } else {
       messageBox.innerHTML = `
     <div class="woodBackground playAgainContainer"><span  class="fullWidth"><h1 class="lgLabel">${p2.name} wins the game!</h1></span>
-      <a href="#" id="playAgainButton" class="enterNameButton" onClick="playerSetup()">Play Again!</a></div>
+      <a href="#" id="playAgainButton" class="enterNameButton" onClick="getRoundsToPlay()">Play Again!</a></div>
       `;
     }
     // give play again button
