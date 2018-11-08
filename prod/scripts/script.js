@@ -245,7 +245,10 @@ function play(p1, p2) {
     winner = p2;
   }
   // After determining and announcing the winner, move on to the next function
+  setTimeout(() => {
   gamePlay(p1, p2);
+}, 1500)
+
 }
 
 // Determine if the game is won or not
