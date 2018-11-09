@@ -1,0 +1,15 @@
+{
+  "env": {
+    "es6": true,
+    "browser": true
+  },
+  "extends": "airbnb",
+  "rules": {
+    "no-console": "warn",
+    "no-unused-vars": "warn",
+    "comma-dangle": "off",
+    "space-before-function-paren": ["error", "never"],
+    "max-len": "off",
+    "quotes": ["error", "single", { "allowTemplateLiterals": true }]
+  }
+}
